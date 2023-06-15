@@ -1,3 +1,31 @@
+<div class="grid end">
+    <div class="fields small col-2">
+        <!-- <p-dropdown appendTo="body"  
+            [baseZIndex]="100" 
+            [options]="filterTypeOptions" 
+            [(ngModel)]="timeKeepingQuery.filter_type" 
+            [autoDisplayFirst]="false" 
+            (onChange)="changeTypeFilter()"
+            placeholder="Select type to filter" 
+            name="organizeId" [filter]="true">
+            <ng-template let-item pTemplate="selectedItem">
+                <span>{{item.label}}</span>
+            </ng-template>
+            <ng-template let-car pTemplate="item">
+                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                <div style="font-size:14px;float:right;margin-top:4px">{{car.label}}</div>
+                </div>
+            </ng-template>
+        </p-dropdown> -->
+
+        <p-calendar  (onSelect)="getTimekeepingDaily()"  placeholder="Select date to filter"
+        panelStyleClass="datepicker-default" placeholder="(DD/MM/YYYY)"
+        [appendTo]="'body'" [baseZIndex]="101" [(ngModel)]="query.toDate" 
+        [monthNavigator]="true" 
+        [yearNavigator]="true" inputId="navigators" dateFormat="dd/mm/yy"
+        name="toDate"></p-calendar>
+    </div>
+</div>
 <div class="d-flex gap12 box-items em-activities">
     <div class="wrap-knod d-flex middle gap6" >
         <ul class="note">

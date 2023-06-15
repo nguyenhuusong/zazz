@@ -10,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
 import queryString from 'query-string';
 import { DashboardEmployee, DashboardTimekeeping } from 'src/app/types/dashboard.type';
 import { Chart } from 'chart.js';
+import * as moment from 'moment';
 const MAX_SIZE = 100000000;
 
 @Component({
@@ -46,9 +47,7 @@ export class TimeKeepingDailyComponent implements OnInit {
   public agGridFn = AgGridFn;
   cols: any[];
   query: any = {
-    filter: '',
-    offSet: 0,
-    pageSize: 20,
+    toDate: new Date()
   }
   perMale = 0;
   perFeMale = 0;
@@ -62,7 +61,9 @@ export class TimeKeepingDailyComponent implements OnInit {
   timekeepingDaily: any = null;
   getTimekeepingDaily() {
     this.spinner.show();
-    const queryParams = queryString.stringify(this.queryParams);
+    const params = {...this.query};
+    params.toDate = moment(this.query.toDate).format('DD/MM/YYYY')
+    const queryParams = queryString.stringify(params);
     this.apiService.getTimekeepingDaily(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
