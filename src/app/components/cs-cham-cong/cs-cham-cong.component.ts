@@ -161,7 +161,7 @@ detailInfoFilter = null;
     delete params.toDate
     const queryParams = queryString.stringify(params);
     // this.spinner.show();
-    this.apiService.getExportReport('ExportBangLuongThang',queryParams)
+    this.apiService.getExportReport('ExportTimeKeepingInfo',queryParams)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe(results => {
       if (results.type === 'application/json') {
