@@ -7,7 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpParams } from '@angular/common/http';
 import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction, updateValueFilterFromUrl } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -171,9 +171,9 @@ export class NsHoSoNghiViecComponent implements OnInit {
   }
 
   listsData = []
-  load() {
+  load(isSearch = false) {
 
-    if(this.apiParam) {
+    if(this.apiParam && !isSearch) {
       this.query = { ...this.query, ...this.apiParam}
     }
     
@@ -708,18 +708,22 @@ export class NsHoSoNghiViecComponent implements OnInit {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.cloneListViewsFilter = cloneDeep(listViews);
-          this.listViewsFilter = [...listViews];
+          // this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
           if(reload) this.load();
           this.detailInfoFilter = results.data;
+
+          const groupFields = updateValueFilterFromUrl(listViews, this.apiParam);
+          this.detailInfoFilter = { ...this.detailInfoFilter, group_fields: groupFields };
+          this.listViewsFilter = [...groupFields];
         }
       });
   }
 
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
-    this.load();
+    this.load(true);
   }
 
   close({ event, datas }) {
