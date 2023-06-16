@@ -98,7 +98,8 @@ export class QtThayDoiLuongComponent implements OnInit {
   organs = []
   isButtonmoveOrganNow = true;
   itemsToolOfGrid: any[] = [];
-  companies = []
+  companies = [];
+  apiParam = null;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -209,6 +210,11 @@ export class QtThayDoiLuongComponent implements OnInit {
   }
 
   load() {
+
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+
     this.columnDefs = []
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);

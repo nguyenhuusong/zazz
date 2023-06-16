@@ -107,7 +107,8 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   }
 
   loadjs = 0;
-  heightGrid = 0
+  heightGrid = 0;
+  apiParam = null;
   ngAfterViewChecked(): void {
     const a: any = document.querySelector(".header");
     const b: any = document.querySelector(".sidebarBody");
@@ -144,6 +145,11 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
   }
 
   load() {
+    
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+
     this.columnDefs = []
     // this.spinner.show();
     const queryParams = queryString.stringify(this.query);
@@ -296,6 +302,7 @@ export class XuLyQuaTrinhCongTacComponent implements OnInit {
       const apiParam = params;
       if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
+        this.apiParam = params;
         this.load();
         this.getFilter(false);
       } else {

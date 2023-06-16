@@ -181,6 +181,9 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   load() {
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
     // for hide sidebar
     this.listRowSelects = [];
     this.isShowbtnPheDuyet = true;
@@ -436,7 +439,8 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     contractId: null,
     empId: null
   }
-  listPrints = []
+  listPrints = [];
+  apiParam = null;
   ngOnInit() {
     this.getWebSocketService();
     this.items = [
@@ -472,6 +476,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       const apiParam = params;
       if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
+        this.apiParam = apiParam;
         this.load();
         this.getContractFilter(false);
       } else {

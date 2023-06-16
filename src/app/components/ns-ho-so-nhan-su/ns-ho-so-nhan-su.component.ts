@@ -101,6 +101,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   itemsToolOfGrid: any[] = [];
   companies = [];
   listActions = [];
+  apiParam = null
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -234,6 +235,11 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
 
   load() {
+
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+    
     this.columnDefs = []
     // this.spinner.show();
     const params: any = { ...this.query };
@@ -660,6 +666,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       const apiParam = params;
       if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
+        this.apiParam = apiParam
         this.load();
         this.getEmpFilter(false);
       } else {

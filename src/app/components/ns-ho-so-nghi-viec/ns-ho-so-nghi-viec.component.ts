@@ -60,6 +60,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
   imgAvatar = '';
   departmentFiltes = [];
   department = null;
+  apiParam = null;
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -171,6 +172,11 @@ export class NsHoSoNghiViecComponent implements OnInit {
 
   listsData = []
   load() {
+
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+    
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
@@ -595,7 +601,20 @@ export class NsHoSoNghiViecComponent implements OnInit {
       { label: 'Quan hệ lao động' },
       { label: 'Danh sách hồ sơ nghỉ việc' },
     ];
-    this.getTerminateFilter();
+
+    this.route.queryParams
+    .subscribe((params: any) => {
+      const apiParam = params;
+      if (Object.keys(apiParam).length > 0) {
+        this.query = { ...this.query, ...apiParam };
+        this.apiParam = apiParam;
+        this.load();
+        this.getTerminateFilter(false);
+      } else {
+        this.getTerminateFilter(true);
+      }
+    })
+
     this.initMenuItem();
   }
   menuItem = []
@@ -682,7 +701,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
     { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
   ];
 
-  getTerminateFilter() {
+  getTerminateFilter(reload: boolean) {
     this.apiService.getTerminateFilter()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
@@ -692,7 +711,7 @@ export class NsHoSoNghiViecComponent implements OnInit {
           this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
-          this.load();
+          if(reload) this.load();
           this.detailInfoFilter = results.data;
         }
       });
