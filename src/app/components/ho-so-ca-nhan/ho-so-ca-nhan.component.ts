@@ -95,7 +95,8 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-  tabIndex: number = 0
+  tabIndex: number = 0;
+  apiParam = null;
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -155,6 +156,10 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
   }
 
   load() {
+    // if(this.apiParam) {
+    //   this.query = { ...this.query, ...this.apiParam}
+    // }
+
     this.columnDefs = []
     let params: any = { ... this.query };
     const queryParams = queryString.stringify(params);
@@ -428,6 +433,7 @@ export class HoSoCaNhanComponent implements OnInit, AfterViewChecked {
       const apiParam = params;
       if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
+        this.apiParam = apiParam
         this.load();
       } else {
         this.load();

@@ -55,6 +55,8 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
     };
   }
 
+  apiParam = null;
+
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -136,6 +138,11 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
   }
 
   load() {
+    
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+
     this.columnDefs = []
     // this.spinner.show();
     const params: any = { ...this.query };
@@ -345,6 +352,7 @@ export class ThaiSanComponent implements OnInit, AfterViewChecked {
         const apiParam = params;
         if (Object.keys(apiParam).length > 0) {
           this.query = { ...this.query, ...apiParam };
+          this.apiParam = apiParam
           this.load();
           this.getEmpFilter(false);
         } else {

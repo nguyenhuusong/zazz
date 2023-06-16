@@ -103,7 +103,7 @@ export class DangKyLichLamViecComponent implements OnInit {
 
   loadjs = 0;
   heightGrid = 0
-
+  apiParam = null;
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -175,6 +175,10 @@ export class DangKyLichLamViecComponent implements OnInit {
   }
 
   load() {
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+
     this.columnDefs = []
     // this.spinner.show();
     let params: any = { ... this.query };
@@ -470,6 +474,7 @@ export class DangKyLichLamViecComponent implements OnInit {
       const apiParam = params;
       if(apiParam) {
         this.query = {...this.query, ...apiParam};
+        this.apiParam = apiParam
         this.load();
         this.getEmpWorkingFilter(false);
       }else {

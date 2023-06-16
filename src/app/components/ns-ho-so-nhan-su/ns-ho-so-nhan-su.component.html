@@ -46,7 +46,7 @@
 
             <div class="paginator" >
                 <span >Từ {{ countRecord.currentRecordStart }} đến
-                    {{ countRecord.currentRecordEnd }}
+                    {{ countRecord.currentRecordEnd === -1 ? countRecord.totalRecord : countRecord.currentRecordEnd }}
                     trên tổng số
                     {{ countRecord.totalRecord }} kết quả</span>
                 <p-paginator  [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"

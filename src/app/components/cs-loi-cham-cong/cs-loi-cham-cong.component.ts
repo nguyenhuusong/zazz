@@ -55,6 +55,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       avatarRendererFull: AvatarFullComponent,
     };
   }
+  apiParam = null;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   ngOnDestroy() {
@@ -143,6 +144,11 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   }
 
   load() {
+    
+    if(this.apiParam) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+
     this.columnDefs = []
     // this.spinner.show();
     const params: any = { ...this.query };
@@ -355,6 +361,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
         const apiParam = params;
         if (Object.keys(apiParam).length > 0) {
           this.query = { ...this.query, ...apiParam };
+          this.apiParam = apiParam
           this.load();
           this.getEmpFilter(false);
         } else {
