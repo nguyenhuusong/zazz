@@ -41,7 +41,7 @@
                               <h1 class="mb-0">{{ tongQuanNhanSu?.tongnv }}</h1>
                               <label>Người</label>
                             </div>
-                            <div class="per"> <span>-10% </span></div>
+                            <div class="per"> <span>{{ tongQuanNhanSu?.rateUpDown }} </span></div>
                         </div>
                       </div>
 
@@ -139,6 +139,7 @@
                   <div><label>Họ tên: </label>{{ birthDay.full_name }}</div>
                   <div><label>Ngày sinh: </label>{{ birthDay.birth_day }}</div>
                   <div><label>Tuổi: </label>{{ birthDay.age }}</div>
+                  <div style="color: #9c9b9b;font-size: 12px;line-height: 1;"><label></label>{{ birthDay.birth_day_ago }}</div>
                 </div>
               </div>
             </li>
