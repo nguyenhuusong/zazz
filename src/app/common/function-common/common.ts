@@ -760,3 +760,14 @@ export function formatNumber(value) {
       return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]}`
     }
   }
+
+  export function updateValueFilterFromUrl(groupFields, apiParam) {
+    groupFields.forEach(group => {
+      group.fields.forEach(field => {
+        if(apiParam.hasOwnProperty(field.field_name)){
+          field.columnValue = apiParam[field.field_name]
+        }
+      });
+    });
+    return groupFields;
+  }
