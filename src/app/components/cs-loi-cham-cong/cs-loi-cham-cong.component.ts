@@ -386,7 +386,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.cloneListViewsFilter = cloneDeep(listViews);
-          // this.listViewsFilter = [...listViews];
+          this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
           if(reload) this.load();
