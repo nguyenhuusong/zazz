@@ -208,13 +208,12 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
-        // {
-        //   onClick: this.delRow.bind(this),
-        //   label: 'Xóa ',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.DELETE)
-        // },
+        {
+          onClick: this.leaveExplan.bind(this),
+          label: 'Giải trình công',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -300,25 +299,11 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       },
     };
   }
+  showGiaiTrinh = false;
+  leaveExplan({rowData}) {
+    this.queryDetail.recordId = rowData.recordId;
+    this.showGiaiTrinh = true;
 
-  delRow(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
-      accept: () => {
-        const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
-        this.apiService.delMaternityInfo(queryParams)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(results => {
-            if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
-              this.load();
-              this.FnEvent();
-            } else {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-            }
-          });
-      }
-    });
   }
   
   editRow({ rowData }) {
