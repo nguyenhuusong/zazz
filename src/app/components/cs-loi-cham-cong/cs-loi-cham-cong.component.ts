@@ -101,7 +101,8 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   queryDetail = {
     recordId: '',
     empId: '',
-    work_date: ''
+    work_date: '',
+    timekeepingId: ''
   }
   isDetail = false;
 
@@ -301,7 +302,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   }
   showGiaiTrinh = false;
   leaveExplan({rowData}) {
-    this.queryDetail.recordId = rowData.recordId;
+    this.queryDetail.timekeepingId = rowData.timekeepingId;
     this.showGiaiTrinh = true;
 
   }

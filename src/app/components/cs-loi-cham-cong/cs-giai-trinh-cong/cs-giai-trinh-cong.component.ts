@@ -24,7 +24,7 @@ export class CsGiaiTrinhCongComponent implements OnInit, OnDestroy {
     , icon: 'pi pi-check'  }
   ]
   url: string = '';
-  @Input() recordId = null;
+  @Input() timekeepingId = null;
   @Output() callback= new EventEmitter<any>();
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -45,7 +45,7 @@ export class CsGiaiTrinhCongComponent implements OnInit, OnDestroy {
   } 
 
   getLeaveExplan() {
-    const queryParams = queryString.stringify({ recordId: this.recordId });
+    const queryParams = queryString.stringify({ timekeepingId: this.timekeepingId });
     this.apiService.getLeaveExplan(queryParams)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(results => {
