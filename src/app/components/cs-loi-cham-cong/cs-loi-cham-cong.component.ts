@@ -25,6 +25,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
 export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
 
   listsData: any[] = [];
+  pinnedBottomData: any[] = [];
   items = []
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
@@ -157,20 +158,34 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
-          this.listsData = results.data.dataList.data;
-          this.gridKey = results.data.dataList.gridKey;
+          this.listsData = results.data.dataList;
+          this.gridKey = results.data.gridKey;
           if (this.query.offSet === 0) {
             this.cols = results.data.gridflexs;
             this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
           }
           this.initGrid();
-          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          // if(results.data.dataList.length > 0) {
+          //  const keyAll= Object.keys(results.data.dataList[0]);
+          //  const keySum= Object.keys(results.data.keepingSum);
+          //  const keepingSum = {};
+          //  for(let item of keyAll) {
+          //   keepingSum[item] = '';
+          //     if(keySum.indexOf(item) > -1) {
+          //       keepingSum[item] = results.data.keepingSum[item]
+          //     }
+          //  }
+          //  console.log(keepingSum)
+          //   this.pinnedBottomData = [keepingSum];
+          // }
+          this.pinnedBottomData = [results.data.keepingSum]
+          this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
             this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
           } else {
-            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            this.countRecord.currentRecordEnd = results.data.recordsTotal;
             setTimeout(() => {
               const noData = document.querySelector('.ag-overlay-no-rows-center');
               if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
