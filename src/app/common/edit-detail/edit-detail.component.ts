@@ -152,6 +152,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
             error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? true : false,
             message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? 'Trường bắt buộc nhập !' : ''
           }
+          console.log(dataValidation)
           this.modelFields[`${element1.field_name}${element1.group_cd}`] = dataValidation
         }
         if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'
@@ -282,6 +283,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.callbackform(group_fields, event)
     }else if(event === 'Update' || event ==='newUpdate' || event ==='Submit') {
       for (let item in this.modelFields) {
+        console.log("sdsds", this.modelFields[item])
         if (this.modelFields[item].error) {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return
