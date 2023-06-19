@@ -62,7 +62,7 @@ styleClass="menu-option-right" #menuButton></p-menu>
             [listFields]="listViewsFilter" 
             [detailInfoFilter]="detailInfoFilter" 
             [buttonsFilters] ="optionsButonFilter" 
-            (callback)="filterLoad($event)" 
+            (callback)="filterLoad($event);op.hide()" 
             (close)="close($event);op.hide()">
         </app-form-filter>
     </ng-template>
