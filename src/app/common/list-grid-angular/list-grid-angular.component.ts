@@ -36,6 +36,7 @@ export class ListGridAngularComponent implements OnInit, OnChanges {
   @Input() rowClassRules: any;
   @Input() noRowsTemplate: any = 'Không có kết quả phù hợp';
   @Input() pinnedTopRowData: any[] = [];
+  @Input() pinnedBottomData: any[] = [];
   @Input() floatingFilter: boolean = false;
   @Input() buttons = [];
   @Input() isShowButton: boolean = false;

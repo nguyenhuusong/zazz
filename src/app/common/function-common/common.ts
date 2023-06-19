@@ -63,10 +63,15 @@ export function AgGridFn(lists: Array<any>) {
                     sortable: false,
                     width: value.columnWidth,
                     cellRenderer: (params: any) => {
-                        return `<span class="custom-control custom-checkbox float-left" style="margin-top: 7%;">
-                        <input type="checkbox" ${params.value ? 'checked' : ''} disabled class="custom-control-input"  >
-                        <label class="custom-control-label"></label>
-                      </span>`;
+                        if(params.node.rowPinned !== 'bottom') {
+                            return `<span class="custom-control custom-checkbox float-left" style="margin-top: 7%;">
+                            <input type="checkbox" ${params.value ? 'checked' : ''} disabled class="custom-control-input"  >
+                            <label class="custom-control-label"></label>
+                          </span>`
+                        }else {
+                            return params.value
+                        }
+                        ;
                     },
                     hide: value.isHide ? true : false,
                     pinned: value.pinned,
@@ -759,4 +764,15 @@ export function formatNumber(value) {
     }else {
       return `${stringDate[2]}-${stringDate[1]}-${stringDate[0]}`
     }
+  }
+
+  export function updateValueFilterFromUrl(groupFields, apiParam) {
+    groupFields.forEach(group => {
+      group.fields.forEach(field => {
+        if(apiParam && apiParam.hasOwnProperty(field.field_name)){
+          field.columnValue = apiParam[field.field_name]
+        }
+      });
+    });
+    return groupFields;
   }

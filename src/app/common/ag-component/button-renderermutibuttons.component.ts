@@ -13,7 +13,8 @@ import { MenuItem } from 'primeng/api';
   // <p-menu styleClass="p-menu-buttons menu-agrid" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" #menu [popup]="true" [model]="items" [appendTo]="'body'"></p-menu>
   // `
   template: `
-      <p-splitButton *ngIf="items.length > 0" [label]="this.params.buttons[0].label"  styleClass="p-button-sm p-button-outlined" (onClick)="onClick($event, 0)" [model]="items" [appendTo]="'body'" ></p-splitButton>
+      <p-splitButton *ngIf="items.length > 0 && params.node.rowPinned !== 'bottom'"  [label]="this.params.buttons[0].label"  styleClass="p-button-sm p-button-outlined" (onClick)="onClick($event, 0)" [model]="items" [appendTo]="'body'" ></p-splitButton>
+      <span *ngIf="params.node.rowPinned === 'bottom'">Tổng</span>
   `
 })
 

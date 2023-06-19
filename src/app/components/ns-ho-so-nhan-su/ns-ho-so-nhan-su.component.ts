@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { ConfirmationService, MessageService, TreeNode } from 'primeng/api';
 import { AllModules, Module } from '@ag-grid-enterprise/all-modules';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AgGridFn, getActionByPathMenu } from 'src/app/common/function-common/common';
+import { AgGridFn, getActionByPathMenu, updateValueFilterFromUrl } from 'src/app/common/function-common/common';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
@@ -101,6 +101,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
   itemsToolOfGrid: any[] = [];
   companies = [];
   listActions = [];
+  apiParam = null
   constructor(
     private apiService: ApiHrmService,
     private spinner: NgxSpinnerService,
@@ -233,7 +234,12 @@ export class NsHoSoNhanSuComponent implements OnInit {
   }
 
 
-  load() {
+  load(isSearch = false) {
+
+    if(this.apiParam && !isSearch) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
+    
     this.columnDefs = []
     // this.spinner.show();
     const params: any = { ...this.query };
@@ -660,6 +666,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
       const apiParam = params;
       if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
+        this.apiParam = apiParam
         this.load();
         this.getEmpFilter(false);
       } else {
@@ -1002,18 +1009,22 @@ export class NsHoSoNhanSuComponent implements OnInit {
       if (results.status === 'success') {
         const listViews = cloneDeep(results.data.group_fields);
         this.cloneListViewsFilter = cloneDeep(listViews);
-        this.listViewsFilter = [...listViews];
+        // this.listViewsFilter = [...listViews];
         const params = getParamString(listViews)
         this.query = { ...this.query, ...params };
         if(reload) this.load();
         this.detailInfoFilter = results.data;
+
+        const groupFields = updateValueFilterFromUrl(listViews, this.apiParam);
+        this.detailInfoFilter = { ...this.detailInfoFilter, group_fields: groupFields };
+        this.listViewsFilter = [...groupFields];
       }
     });
   }
 
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
-    this.load();
+    this.load(true);
   }
   isShow = true;
   close({event, datas}) {

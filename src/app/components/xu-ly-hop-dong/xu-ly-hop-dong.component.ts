@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash';
 import { CustomTooltipComponent } from 'src/app/common/ag-component/customtooltip.component';
 import { ButtonAgGridComponent } from 'src/app/common/ag-component/button-renderermutibuttons.component';
 import { AvatarFullComponent } from 'src/app/common/ag-component/avatarFull.component';
-import { AgGridFn, CheckHideAction } from 'src/app/common/function-common/common';
+import { AgGridFn, CheckHideAction, updateValueFilterFromUrl } from 'src/app/common/function-common/common';
 import { ApiHrmService } from 'src/app/services/api-hrm/apihrm.service';
 import { HttpParams } from '@angular/common/http';
 import { WebsocketService2 } from 'src/app/services/websocket.service';
@@ -180,7 +180,10 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     this.displaySetting = true;
   }
 
-  load() {
+  load(isSearch = false) {
+    if(this.apiParam && !isSearch) {
+      this.query = { ...this.query, ...this.apiParam}
+    }
     // for hide sidebar
     this.listRowSelects = [];
     this.isShowbtnPheDuyet = true;
@@ -436,7 +439,8 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
     contractId: null,
     empId: null
   }
-  listPrints = []
+  listPrints = [];
+  apiParam = null;
   ngOnInit() {
     this.getWebSocketService();
     this.items = [
@@ -472,6 +476,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
       const apiParam = params;
       if (Object.keys(apiParam).length > 0) {
         this.query = { ...this.query, ...apiParam };
+        this.apiParam = apiParam;
         this.load();
         this.getContractFilter(false);
       } else {
@@ -864,18 +869,22 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.cloneListViewsFilter = cloneDeep(listViews);
-          this.listViewsFilter = [...listViews];
+          // this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
           if(reload) this.load();
           this.detailInfoFilter = results.data;
+
+          const groupFields = updateValueFilterFromUrl(listViews, this.apiParam);
+          this.detailInfoFilter = { ...this.detailInfoFilter, group_fields: groupFields };
+          this.listViewsFilter = [...groupFields];
         }
       });
   }
 
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
-    this.load();
+    this.load(true);
   }
 
   close({ event, datas }) {
