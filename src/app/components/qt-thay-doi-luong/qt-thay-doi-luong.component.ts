@@ -336,17 +336,13 @@ export class QtThayDoiLuongComponent implements OnInit {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         maxWidth: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right cell-action', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
+        field: ''
       }]
 
     this.detailCellRendererParams = {

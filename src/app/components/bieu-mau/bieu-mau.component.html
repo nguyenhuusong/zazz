@@ -21,6 +21,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button *ngIf="indexTab === 1" styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="handleAdd()"></p-button>
                 <p-button *ngIf="indexTab === 1" 
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetFormGeneral.url, action: ACTIONS.DAY_LEN_APP}"
                 [ngClass]="{ 'active' : listDataSelect.length > 0  }" styleClass="height-56 btn-active-on-off" (click)="pushToApp()">

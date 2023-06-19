@@ -25,6 +25,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="handleAdd()"></p-button>
                 <p-button styleClass="p-button-sm mr-1 " (click)="toManagerRoom()"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetMeetingPage.url, action: ACTIONS.QUAN_LY_PHONG_HOP}"
                 >

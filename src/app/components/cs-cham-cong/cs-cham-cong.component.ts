@@ -244,7 +244,7 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '',
         filter: '',
         maxWidth: 100,
         pinned: 'right',
