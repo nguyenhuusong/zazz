@@ -1087,8 +1087,8 @@ export class AppTypeDatetimeComponent implements OnInit, OnChanges {
   template: `   
             <div class="fields" [ngClass]=" element.columnValue ? 'valid' : 'invalid' ">
             <label class="text-nowrap label-text" >{{element.columnLabel}} <span style="color:red" *ngIf="element.isRequire">*</span></label>
-            <p-calendar placeholder="DD/MM/YYYY hh:ss" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable"
-                  [(ngModel)]="element.columnValue" [monthNavigator]="true" [showTime]="true" hourFormat="24" [yearNavigator]="true"
+            <p-calendar placeholder="DD/MM/YYYY hh:ss" appendTo="body" [baseZIndex]="101" [disabled]="element.isDisable" (onSelect)="onChangeValue($event, element.field_name)"
+                  [(ngModel)]="element.columnValue" [monthNavigator]="true" [showTime]="true" hourFormat="24" [yearNavigator]="true" (onBlur)="onChangeValue($event, element.field_name)"
                   yearRange="2000:2030" inputId="navigators" [required]="element.isRequire && element.isVisiable && !element.isEmpty"
                   dateFormat="dd/mm/yy" name={{element.field_name}}></p-calendar>
 
@@ -1114,6 +1114,12 @@ export class AppTypeDatefulltimeComponent implements OnInit {
       this.modelFields[this.element.field_name].error = false
     }
   }
+
+  onChangeValue(value, field_name) {
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error = this.modelFields[`${this.element.field_name}${this.element.group_cd}`].isRequire && !this.element.columnValue ? true : false;
+    this.modelFields[`${this.element.field_name}${this.element.group_cd}`].message = this.modelFields[`${this.element.field_name}${this.element.group_cd}`].error ? 'Trường bắt buộc nhập' : '';
+  }
+
 
 }
 
