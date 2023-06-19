@@ -956,6 +956,10 @@ export class ApiHrmService {
   delMaternityInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityInfo?` + queryParams, this.options)
   }
+  
+  getLeaveExplan(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/leave/GetLeaveExplan?` + queryParams, this.options)
+  }
 
   delMaternityPolicyInfo(queryParams): Observable<any> {
     return this.http.delete<any>(`${apiHrmServer}/api/v2/maternity/DelMaternityPolicyInfo?` + queryParams, this.options)

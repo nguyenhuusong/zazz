@@ -72,7 +72,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
         CheckboxEditorComponent,
         TooltipSuggestionComponent,
         DropdownRendererComponent,
-        UniNotFoundComponent
+        UniNotFoundComponent,
         
     ],
     imports: [

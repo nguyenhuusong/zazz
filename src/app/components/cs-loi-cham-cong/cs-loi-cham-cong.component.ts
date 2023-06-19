@@ -25,6 +25,7 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
 export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
 
   listsData: any[] = [];
+  pinnedBottomData: any[] = [];
   items = []
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
@@ -100,7 +101,8 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   queryDetail = {
     recordId: '',
     empId: '',
-    work_date: ''
+    work_date: '',
+    timekeepingId: ''
   }
   isDetail = false;
 
@@ -157,20 +159,34 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
-          this.listsData = results.data.dataList.data;
-          this.gridKey = results.data.dataList.gridKey;
+          this.listsData = results.data.dataList;
+          this.gridKey = results.data.gridKey;
           if (this.query.offSet === 0) {
             this.cols = results.data.gridflexs;
             this.colsDetail = results.data.gridflexdetails ? results.data.gridflexdetails : [];
           }
           this.initGrid();
-          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-          this.countRecord.totalRecord = results.data.dataList.recordsTotal;
-          this.countRecord.currentRecordStart = results.data.dataList.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
-          if ((results.data.dataList.recordsTotal - this.query.offSet) > this.query.pageSize) {
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          this.countRecord.totalRecord = results.data.recordsTotal;
+          // if(results.data.dataList.length > 0) {
+          //  const keyAll= Object.keys(results.data.dataList[0]);
+          //  const keySum= Object.keys(results.data.keepingSum);
+          //  const keepingSum = {};
+          //  for(let item of keyAll) {
+          //   keepingSum[item] = '';
+          //     if(keySum.indexOf(item) > -1) {
+          //       keepingSum[item] = results.data.keepingSum[item]
+          //     }
+          //  }
+          //  console.log(keepingSum)
+          //   this.pinnedBottomData = [keepingSum];
+          // }
+          this.pinnedBottomData = [results.data.keepingSum]
+          this.countRecord.currentRecordStart = results.data.recordsTotal === 0 ? this.query.offSet = 0 : this.query.offSet + 1;
+          if ((results.data.recordsTotal - this.query.offSet) > this.query.pageSize) {
             this.countRecord.currentRecordEnd = this.query.offSet + Number(this.query.pageSize);
           } else {
-            this.countRecord.currentRecordEnd = results.data.dataList.recordsTotal;
+            this.countRecord.currentRecordEnd = results.data.recordsTotal;
             setTimeout(() => {
               const noData = document.querySelector('.ag-overlay-no-rows-center');
               if (noData) { noData.innerHTML = 'Không có kết quả phù hợp' }
@@ -193,13 +209,12 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
           icon: 'fa fa-eye',
           class: 'btn-primary mr5',
         },
-        // {
-        //   onClick: this.delRow.bind(this),
-        //   label: 'Xóa ',
-        //   icon: 'pi pi-trash',
-        //   class: 'btn-primary mr5',
-        //   hide: CheckHideAction(MENUACTIONROLEAPI.GetMaternityPage.url, ACTIONS.DELETE)
-        // },
+        {
+          onClick: this.leaveExplan.bind(this),
+          label: 'Giải trình công',
+          icon: 'pi pi-trash',
+          class: 'btn-primary mr5',
+        },
       ]
     };
   }
@@ -285,25 +300,11 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       },
     };
   }
+  showGiaiTrinh = false;
+  leaveExplan({rowData}) {
+    this.queryDetail.timekeepingId = rowData.timekeepingId;
+    this.showGiaiTrinh = true;
 
-  delRow(event) {
-    this.confirmationService.confirm({
-      message: 'Bạn có chắc chắn muốn thực hiện xóa bản ghi này?',
-      accept: () => {
-        const queryParams = queryString.stringify({ maternityId: event.rowData.maternityId });
-        this.apiService.delMaternityInfo(queryParams)
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(results => {
-            if (results.status === 'success') {
-              this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: results.data ? results.data : 'Xóa tuyển dụng thành công' });
-              this.load();
-              this.FnEvent();
-            } else {
-              this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: results ? results.message : null });
-            }
-          });
-      }
-    });
   }
   
   editRow({ rowData }) {
@@ -386,7 +387,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
         if (results.status === 'success') {
           const listViews = cloneDeep(results.data.group_fields);
           this.cloneListViewsFilter = cloneDeep(listViews);
-          // this.listViewsFilter = [...listViews];
+          this.listViewsFilter = [...listViews];
           const params = getParamString(listViews)
           this.query = { ...this.query, ...params };
           if(reload) this.load();
