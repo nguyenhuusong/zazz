@@ -406,6 +406,7 @@ export class DanhSachPhongHopComponent implements OnInit {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.model = { ...this.model, ...event.data };
     this.load();
   }

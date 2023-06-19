@@ -504,6 +504,7 @@ detailInfoFilter = null;
   }
 
    filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.model = { ...this.model, ...event.data };
     this.load();
     this.FnEvent();

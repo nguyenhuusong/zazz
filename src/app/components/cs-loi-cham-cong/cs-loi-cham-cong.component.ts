@@ -212,7 +212,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
         {
           onClick: this.leaveExplan.bind(this),
           label: 'Giải trình công',
-          icon: 'pi pi-trash',
+          icon: 'uni-icon uni-pen-line',
           class: 'btn-primary mr5',
         },
       ]
@@ -400,6 +400,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
       });
   }
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load(true);
     this.FnEvent();

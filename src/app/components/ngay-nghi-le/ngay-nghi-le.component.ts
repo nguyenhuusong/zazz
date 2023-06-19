@@ -466,6 +466,7 @@ export class NgayNghiLeComponent implements OnInit {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();
