@@ -133,6 +133,7 @@ export class PageMauThongBaoComponent implements OnInit, OnDestroy, AfterViewChe
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
   }

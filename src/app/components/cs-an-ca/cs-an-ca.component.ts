@@ -542,6 +542,7 @@ export class CsAnCaComponent implements OnInit, AfterViewChecked {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     console.log('this.query', this.query)
     this.load();

@@ -883,6 +883,7 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load(true);
   }
