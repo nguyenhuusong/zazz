@@ -212,7 +212,7 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
         {
           onClick: this.leaveExplan.bind(this),
           label: 'Giải trình công',
-          icon: 'pi pi-trash',
+          icon: 'uni-icon uni-pen-line',
           class: 'btn-primary mr5',
         },
       ]
