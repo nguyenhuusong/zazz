@@ -46,6 +46,7 @@ export class FormFilterComponent implements OnInit, OnChanges {
   @Output() callback1 = new EventEmitter<any>();
   @Output() close = new EventEmitter<any>();
   @Input() manhinh;
+  @Input() hiddenButtonClose: boolean = false ;
   @Input() optionsButtonsEdit: any[] = [
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus', disabled: false }
   ];
