@@ -982,7 +982,7 @@ app-edit-detail{
                 z-index: 3;
             }
             .title-section{
-                color: $mainBg;
+                color: #0b3a85;
                 margin-bottom: 16px;
                 position: relative;
                 padding-bottom: 5px;
@@ -991,7 +991,7 @@ app-edit-detail{
                     content: '';
                     width: 32px;
                     height: 4px;
-                    background: rgb(0 84 219 / 72%);
+                    background: rgba(11,58,133,.7215686275);
                     position: absolute;
                     bottom: 0;
                     left: 0;
@@ -2025,8 +2025,8 @@ p-sidebar{
 }
 
 .border-section{
-    .title-section{
-        color: $mainBg;
+   .title-section{
+        color: #0b3a85;
         margin-bottom: 16px;
         position: relative;
         padding-bottom: 5px;
@@ -2035,7 +2035,7 @@ p-sidebar{
             content: '';
             width: 32px;
             height: 4px;
-            background: rgb(0 84 219 / 72%);
+            background: rgba(11,58,133,.7215686275);
             position: absolute;
             bottom: 0;
             left: 0;
