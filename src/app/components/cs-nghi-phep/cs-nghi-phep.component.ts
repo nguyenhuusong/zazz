@@ -280,7 +280,10 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
 
     this.detailCellRendererParams = {
       detailGridOptions: {
-        frameworkComponents: {},
+        frameworkComponents: {
+          buttonAgGridComponent: ButtonAgGridComponent,
+          customTooltip: CustomTooltipComponent,
+        },
         getRowHeight: (params) => {
           return 40;
         },
@@ -322,17 +325,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           dataType: 'string'
         }
       ],
-      template: function (params) {
-        var personName = params.data.theme;
-        return (
-          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
-          personName + ']' +
-          '</div>' +
-          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-          '</div>'
-        );
-      },
     };
   }
 

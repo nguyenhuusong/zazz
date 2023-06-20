@@ -88,15 +88,7 @@ export class HopDongComponent implements OnInit {
     this[columnDefs] = [
       ...AgGridFn(gridflexs || []),
       {
-<<<<<<< HEAD
         field: '',
-=======
-        // headerComponentParams: {
-        //   template:
-        //     `<button  class="btn-button" id="${this.gridKey}_hoso"> <span class="pi pi-upload action-grid-add" ></span></button>`,
-        // },
-        field: 'gridflexdetails1',
->>>>>>> b52229354edd4ae94478b259c3e731d2f247e49b
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 120,
