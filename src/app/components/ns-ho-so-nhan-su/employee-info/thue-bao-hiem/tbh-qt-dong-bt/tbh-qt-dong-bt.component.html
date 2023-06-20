@@ -2,8 +2,10 @@
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex col-12 pl-0 pr-0 bet">
                     <h3 class="title-section">Danh sách quá trình đóng bảo hiểm</h3>
+                    <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addWorked()"></p-button>
+                    
                 </div>
             </ng-template>
             <div class="row" style="flex-wrap: wrap">

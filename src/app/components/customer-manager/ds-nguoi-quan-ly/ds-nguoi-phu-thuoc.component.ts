@@ -232,10 +232,6 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
           columnDefs: [
             ...AgGridFn(this.colsDetail),
             {
-              headerComponentParams: {
-                template:
-                  `<button  class="btn-button" id="${this.gridKey}-child"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-              },
               filter: '',
               width: 60,
               pinned: 'right',
@@ -243,7 +239,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
               cellClass: ['border-right', 'no-auto'],
               cellRendererParams: (params: any) => this.showButtons(params),
               checkboxSelection: false,
-              field: 'checkbox'
+              field: ''
             }
           ],
   

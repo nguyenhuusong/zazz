@@ -86,10 +86,6 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         field: 'gridflexdetails1',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',

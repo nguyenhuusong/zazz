@@ -189,15 +189,11 @@ export class QuaTrinhHopDongComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 100,
         pinned: 'right',
         cellClass: ['border-right', 'no-auto'],
-        field: 'gridflexdetails1',
+        field: '',
         checkboxSelection: true,
         headerCheckboxSelection: true,
         headerCheckboxSelectionFilteredOnly: true,

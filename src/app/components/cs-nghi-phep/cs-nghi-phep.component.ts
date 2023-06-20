@@ -163,7 +163,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     // this.spinner.show();
     const queryParams: any = { ...this.query };
     const queryStrings = queryString.stringify(queryParams);
-    this.apiService.getLeavePage(queryStrings)
+    this.apiService.getExplanationLeavePage(queryStrings)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
@@ -266,16 +266,17 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      {
-        filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }]
+      // {
+      //   filter: '',
+      //   width: 100,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   checkboxSelection: false,
+      //   field: ''
+      // }
+    ]
 
     this.detailCellRendererParams = {
       detailGridOptions: {
@@ -285,6 +286,16 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         },
         columnDefs: [
           ...AgGridFn(this.colsDetail),
+          {
+            filter: '',
+            width: 100,
+            pinned: 'right',
+            cellRenderer: 'buttonAgGridComponent',
+            cellClass: ['border-right', 'no-auto'],
+            cellRendererParams: (params: any) => this.showButtons(params),
+            checkboxSelection: false,
+            field: ''
+          }
         ],
 
         enableCellTextSelection: true,
@@ -303,7 +314,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         },
       },
       getDetailRowData(params) {
-        params.successCallback(params.data.Owns);
+        params.successCallback(params.data.details);
       },
       excelStyles: [
         {

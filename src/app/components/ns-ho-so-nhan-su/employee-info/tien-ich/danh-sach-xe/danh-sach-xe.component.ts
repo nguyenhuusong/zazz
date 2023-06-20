@@ -52,6 +52,10 @@ export class DanhSachXeComponent implements OnInit {
     }, 300);
   }
 
+  addRow() {
+    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển' });
+  }
+
   ngOnInit(): void {
     this.getEmpVehiclePageByEmp();
   }
@@ -137,11 +141,7 @@ export class DanhSachXeComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
-        field: 'gridflexdetails1',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,
