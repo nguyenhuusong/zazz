@@ -987,6 +987,7 @@ app-edit-detail{
                 position: relative;
                 padding-bottom: 5px;
                 font-weight: 700;
+                font-size: 15px;
                 &::after{
                     content: '';
                     width: 32px;
@@ -2031,6 +2032,7 @@ p-sidebar{
         position: relative;
         padding-bottom: 5px;
         font-weight: 700;
+        font-size: 15px;
         &::after{
             content: '';
             width: 32px;
