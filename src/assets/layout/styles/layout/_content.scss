@@ -414,6 +414,17 @@ ag-grid-angular{
                         }
                     }
                 }
+                &.ag-row-group-expanded{
+                    &.ag-row-focus {
+                        .ag-cell{
+                            border-top: transparent !important;
+                            border-bottom: transparent !important;
+                        }
+                    }
+                    .ag-header{
+                        background: #f3f3f3;
+                    }
+                }
             }
             .ag-cell{
                 border: 1px solid transparent;
