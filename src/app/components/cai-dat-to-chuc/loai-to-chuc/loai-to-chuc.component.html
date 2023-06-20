@@ -34,6 +34,9 @@
         </div>
     </section>
     <section class="content">
+        <div class="text-right pd-2">
+            <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addLoaiToChuc()"></p-button>
+        </div>
         <div class="grid-default" #container>
             <app-list-grid-angular  *ngIf="columnDefs?.length > 0"
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"

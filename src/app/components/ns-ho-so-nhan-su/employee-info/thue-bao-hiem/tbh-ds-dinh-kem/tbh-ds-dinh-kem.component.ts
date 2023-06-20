@@ -152,11 +152,7 @@ export class TbhDsDinhKemComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}_worked"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
-        field: 'gridflexdetails1',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,

@@ -6,7 +6,10 @@
                     <h3 class="title-section">Danh sách giấy tờ cá nhân</h3>
                 </div>
             </ng-template>
-            <div class="row" style="flex-wrap: wrap">
+            <div>
+                <div class="text-right pd-2">
+                    <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addCCCD()"></p-button>
+                </div>
                 <div class="grid-default border">
                     <app-list-grid-angular 
                         [domLayout]="'autoHeight'"
