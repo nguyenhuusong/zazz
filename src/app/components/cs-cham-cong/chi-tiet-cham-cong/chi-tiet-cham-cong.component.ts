@@ -16,7 +16,7 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButtonsView = [{ label: 'Quay lại', value: 'Cancel', icon: 'pi pi-arrow-left' }];
+  optionsButtonsView = [];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -182,6 +182,10 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
     this.queryDetail.empId = rowData.empId;
     this.queryDetail.recordId = rowData.recordId;
     this.queryDetail.work_date = rowData.work_date;
+  }
+
+  quaylai() {
+    this.router.navigate(['/chinh-sach/cham-cong']);
   }
 
   callback() {

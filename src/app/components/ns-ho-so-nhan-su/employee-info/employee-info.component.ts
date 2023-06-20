@@ -80,6 +80,10 @@ export class EmployeeInfoComponent implements OnInit {
       }
     })
   }
+
+  goBackPage() {
+    this.router.navigate(['/nhan-su/ho-so-nhan-su'])
+  }
   
   reloadEdit() {
     this.dataEmployeeStatus = null;
