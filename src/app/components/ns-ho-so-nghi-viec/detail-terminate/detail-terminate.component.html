@@ -1,5 +1,6 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
-    <section class="section-box">
+    <section class="section-box flex gap-1">
+        <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="onBack()"></i>
         <div class="breadcrumb">
             <h3>{{titlePage}}</h3>
             <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
@@ -45,7 +46,7 @@
                                 </p-dropdown>
                             </div>
                             <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-                            <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                            <!-- <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
                               </div>
         </p-tabPanel>
         <p-tabPanel header="Danh sách hồ sơ">

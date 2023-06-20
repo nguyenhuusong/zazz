@@ -188,7 +188,6 @@ export class ChiTietChinhSachLuongComponent implements OnInit {
       }
     });
   }
-
   
 }
 
