@@ -43,7 +43,7 @@
                 </p-dropdown>
             </div>
             <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-            <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+            <!-- <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
               </div>
         <!-- <div class="col-3 text-right">
             <div class="buttons" *ngIf="detailInfo?.emp_st === 1" >
