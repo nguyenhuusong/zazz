@@ -244,7 +244,7 @@ export class SidebarComponent implements OnInit {
                 }
                
             } else {
-                const items = k.submenus.filter(i => i.path === pathname);
+                const items = k.submenus.filter(i => pathname.includes(i.path));
                 if(items.length > 0) k.styleClass = "parent_active" + ' ' + k.classs
             }
 
