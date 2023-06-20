@@ -726,6 +726,10 @@
                 }
             }
         }
+        .p-overlay{
+            left: auto !important;
+            right: 0px;
+        }
     }
     &.field-btn{
         input{

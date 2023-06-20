@@ -141,7 +141,7 @@ export class HopDongComponent implements OnInit {
         },
       } : {
         
-        field: 'gridflexdetails12',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,

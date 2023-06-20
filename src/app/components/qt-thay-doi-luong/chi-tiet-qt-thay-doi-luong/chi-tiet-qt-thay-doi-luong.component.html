@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
-                <div class="fields " [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
+                <div class="fields btn" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0 && status.length > 0" 
                         [options]="status" 
