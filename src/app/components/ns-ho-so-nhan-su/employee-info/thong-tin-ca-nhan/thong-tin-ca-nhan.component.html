@@ -16,7 +16,7 @@
         </ul>
            
 <div class="col-3 gap-2 flex justify-content-end align-items-center" style="padding: 0;">
-    <div class="fields " style="margin-bottom: 0;">
+    <div class="fields" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
         <p-dropdown 
             *ngIf="listViews.length> 0 && status.length > 0" 
             [options]="status" 
@@ -28,7 +28,7 @@
             placeholder="Chọn trạng thái">
             <ng-template pTemplate="selectedItem" >
                 <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                    <div style="color: #fff">{{ selectedStatus.name}}</div>
+                    <div>{{ selectedStatus.name}}</div>
                 </div>
             </ng-template>
             <ng-template let-country pTemplate="item">

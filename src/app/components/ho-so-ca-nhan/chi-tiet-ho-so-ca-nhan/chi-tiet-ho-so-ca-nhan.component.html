@@ -23,7 +23,7 @@
             <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
             </app-loading-detail>
             <div class="col-12  flex justify-content-end align-items-center btn-position" >
-                <div class="fields " style="margin-bottom: 0;">
+                <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0" 
                         [options]="status" 
@@ -35,7 +35,7 @@
                         placeholder="Chọn trạng thái">
                         <ng-template pTemplate="selectedItem" >
                             <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                <div>{{ selectedStatus.name}}</div>
                             </div>
                         </ng-template>
                         <ng-template let-country pTemplate="item">
@@ -110,7 +110,7 @@
                         placeholder="Chọn trạng thái">
                         <ng-template pTemplate="selectedItem" >
                             <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                <div>{{ selectedStatus.name}}</div>
                             </div>
                         </ng-template>
                         <ng-template let-country pTemplate="item">

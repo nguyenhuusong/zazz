@@ -793,6 +793,9 @@ p-tabview{
                             span{
                                 color: $activeColor;
                             }
+                            // .pi{
+                            //     color: $success;
+                            // }
                         }
                     }
                 }
@@ -865,6 +868,9 @@ p-tabview{
                         margin-bottom: 0px !important;
                         border-bottom: none !important;
                         padding-left: 5px !important;
+                        flex-direction: row-reverse;
+                        justify-content: space-between;
+                        width: 100%;
                         span{
                             white-space: unset !important;
                             line-height: 1;
@@ -1990,4 +1996,15 @@ p-sidebar{
 }
 p-sidebar{
 
+}
+.avatar{
+    app-type-image{
+        .p-image{
+            display: block;
+            &>img{
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
 }
