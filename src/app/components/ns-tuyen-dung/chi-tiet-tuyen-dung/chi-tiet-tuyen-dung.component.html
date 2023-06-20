@@ -1,5 +1,6 @@
 <div class="main-grid product-detail" style="position: relative;">
-    <section class="bread-crumb">
+    <section class="bread-crumb flex gap-1">
+        <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="quaylai('')"></i>
         <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
     </section>
     <section class="content" style="
@@ -33,8 +34,8 @@
                 </ng-template>
             </p-dropdown>
         </div>
-        <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-        <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+        <p-splitButton icon="pi pi-save" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+        <!-- <p-button label="Quay lại"  styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
     </div>
     </section>
     <section>

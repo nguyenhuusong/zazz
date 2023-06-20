@@ -6,6 +6,9 @@
             <ng-container *ngFor="let group of dataView; let idx = index">
                 <div class="{{group.group_column ? group.group_column : 'col-12'}} border-section">
                     <p-card [style]="{'margin-bottom': '15px'}">
+                        <div *ngIf="hiddenButtonClose" class="close flex justify-content-end mr-2" style="position: relative; top: 20px; z-index: 10;" >
+                            <i class="pi pi-times" style="font-size: 1.3rem; cursor: pointer;" (click)="cancel('Close')"></i>
+                        </div>
                         <div class="grid justify-content-start">
                             <div *ngFor="let element of group.fields;let i=index" 
                                 [hidden]="!element.isVisiable"
@@ -27,18 +30,18 @@
                                 <lib-select-tree-control [detail]="detail" [dataView]="dataView" [modelFields]="modelFields" [element]="element" *ngIf="element?.columnType === 'selectTree'" (callbackSelectTree)="callbackSearch()" [submit]="submit"></lib-select-tree-control>
                             </div>
                         </div>
-                
+                        
                     </p-card>
                 </div>
             </ng-container>
         </div>
         <div class="grid" >
-            <div class="col-12 button-filter text-right d-flex gap12">
+            <div class="col-12 button-filter text-right justify-content-end d-flex gap12">
                 <ng-container *ngFor="let button of buttonsFilters">
                     <p-button label="{{button.label}}" (onClick)="onChangeButtonEdit(button.value)" [disabled]="button?.disabled" icon="{{button?.icon ? button?.icon : 'pi pi-plus'}}" styleClass="p-button-sm {{button?.class ? button?.class : ''}}"></p-button>
                 </ng-container>
                 <p-button styleClass="p-button-sm p-button-secondary" (click)="CauHinh()"><span class="uni-icon uni-setting-transparent uni-white-color"></span></p-button>
-                <p-button label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary" icon="pi pi-times" (click)="cancel('Close')"></p-button>
+                <p-button *ngIf="!hiddenButtonClose" label="Đóng" styleClass="p-button-sm p-button-secondary bg-secondary" icon="pi pi-times" (click)="cancel('Close')"></p-button>
             </div>
         </div>
     </form>
