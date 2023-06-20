@@ -33,7 +33,7 @@
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 (onCellClicked)="onCellClicked($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="16"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="16"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

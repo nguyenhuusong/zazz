@@ -114,6 +114,7 @@ import { DanhSachThietBiComponent } from 'src/app/components/ns-ho-so-nhan-su/em
 import { HoSoComponent } from 'src/app/components/ns-ho-so-nghi-viec/detail-terminate/ho-so/ho-so.component';
 import {CheckboxModule} from 'primeng/checkbox';
 import { HopDongComponent as SalaryHopDongComponent } from 'src/app/components/qt-thay-doi-luong/chi-tiet-qt-thay-doi-luong/hop-dong/hop-dong.component';
+import { HopDongComponent as ProcessHopDongComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/vi-tri-cong-viec/hop-dong/hop-dong.component';
 import { EditChuyenMonComponent } from 'src/app/components/ns-ho-so-nhan-su/employee-info/chuyen-mon/edit-chuyen-mon/edit-chuyen-mon.component';
 import { ImportTerminateComponent } from 'src/app/components/ns-ho-so-nghi-viec/import-terminate/import-terminate.component';
 import { XuLyQuaTrinhCongTacComponent } from 'src/app/components/xu-ly-qua-trinh-cong-tac/xu-ly-qua-trinh-cong-tac.component';
@@ -281,7 +282,9 @@ import { TimelineChartModule } from 'src/app/common/timeline-chart/timeline-char
     ChamCongComponent,
     ChiTietChamCongComponent,
     TongQuanNhanSuComponent,
-    DetailRendererGrid
+    DetailRendererGrid,
+    ProcessHopDongComponent,
+
 
   ],
   providers: [ 

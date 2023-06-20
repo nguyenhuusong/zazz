@@ -2996,9 +2996,16 @@ export class ApiHrmService {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empprocess/SetEmpProcessImport`, queryParams, customOptions);
   }
 
+  setProcessRecordUpload(queryParams): Observable<any> {
+    return this.http.post(`${apiHrmServer}/api/v2/empprocess/SetProcessRecordUpload`, queryParams, this.optionsUpload)
+  }
 
   setEmpProcessAccept(queryParams): Observable<any> {
     return this.http.post<any>(`${apiHrmServer}/api/v2/empprocess/SetEmpProcessAccept`, queryParams, this.options);
+  }
+
+  getProcessMetaPage(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/empprocess/GetProcessMetaPage?` + queryParams, this.options);
   }
 
   setEmpProcessExportDraft(data): Observable<Blob> {

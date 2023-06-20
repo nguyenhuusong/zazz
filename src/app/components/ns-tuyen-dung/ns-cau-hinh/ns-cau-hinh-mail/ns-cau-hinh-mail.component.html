@@ -31,7 +31,7 @@
         [height]="heightGrid"
         >
     </app-list-grid-angular>
-    <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+    <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
     <div class="paginator">
         <span>Từ {{ countRecord.currentRecordStart }} đến
             {{ countRecord.currentRecordEnd }}

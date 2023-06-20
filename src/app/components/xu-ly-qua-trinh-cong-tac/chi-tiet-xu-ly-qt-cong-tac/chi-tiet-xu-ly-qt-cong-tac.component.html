@@ -71,6 +71,8 @@
         <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)"
             (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-hop-dong-process *ngIf="contract_is == 1 && detailInfo" [processId]="detailInfo?.processId" [empId]="detailInfo?.empId" ></app-hop-dong-process>
+
             <app-loading-detail 
                 [id]="'app-chi-tiet-xu-ly-qt-cong-tac'" 
                 *ngIf="listViews.length === 0">
