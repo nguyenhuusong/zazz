@@ -86,7 +86,7 @@ export class QuaTrinhCongTacComponent implements OnInit, AfterViewInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        field: 'gridflexdetails1',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,

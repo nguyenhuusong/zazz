@@ -42,20 +42,22 @@
 </div> -->
 
 <section class="pt-0 pb-0">
-    <div class="d-flex section-box justify-content-between">
+    <div class="d-flex section-box bet border-section">
             <h3 class="title-section">Quá trình hợp đồng</h3>
-            <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="taohopdong()"></p-button>
-            <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm "
-                [disabled]="isShowbtnPheDuyet">
-            </p-button>
+            <div class="d-flex gap4">
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="taohopdong()"></p-button>
+                <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm "
+                    [disabled]="isShowbtnPheDuyet">
+                </p-button>
 
-            <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
-                styleClass="p-button-sm ">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
-                    </svg>
-                    &nbsp;Cài plugin
-            </p-button>
+                <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
+                    styleClass="p-button-sm ">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0H16V16H0V0Z" fill="#F3F8FF"/>
+                        </svg>
+                        &nbsp;Cài plugin
+                </p-button>
+            </div>
         </div>
             <app-list-grid-angular 
                 [domLayout]="'autoHeight'" 
