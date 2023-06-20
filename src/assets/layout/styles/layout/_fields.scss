@@ -676,6 +676,7 @@
             .p-dropdown-trigger-icon{
                 font-size: 12px;
                 font-weight: 600;
+                color: #ccc;
             }
             .p-dropdown-item {
                 padding-top: 0;
@@ -690,9 +691,6 @@
                 .p-dropdown-label{
                     color: $success;
                 }
-                .p-dropdown-trigger-icon{
-                    color: #ccc;
-                }
                 &::after{
                     background: $success
                 }
@@ -703,11 +701,28 @@
                 .p-dropdown-label{
                     color: $secondary;
                 }
-                .p-dropdown-trigger-icon{
-                    color: #ccc;
-                }
                 &::after{
                     background: $secondary
+                }
+            }
+            .bgInprogress{
+                background-color: $inProgress006;
+                border-color: $inProgress006 !important;
+                .p-dropdown-label{
+                    color: $inProgress;
+                }
+                &::after{
+                    background: $inProgress
+                }
+            }
+            .bgUndo{
+                background-color: $dark006;
+                border-color: $dark006 !important;
+                .p-dropdown-label{
+                    color: $dark;
+                }
+                &::after{
+                    background: $dark
                 }
             }
         }
@@ -762,6 +777,14 @@
         }
         .p-dropdown{
             height: 36px;
+        }
+    }
+    &.no-dropdown{
+        .p-dropdown{
+            padding-right: 12px;
+            .p-dropdown-trigger{
+                display: none;
+            }
         }
     }
 }

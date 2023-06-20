@@ -18,7 +18,7 @@
         <p-tabView [(activeIndex)]="indexTab" styleClass="tab-ver" (onChange)="handleChange($event.index)">
             <p-tabPanel header="Thông tin chung">
                 <div class="col-6  flex justify-content-end align-items-center"  style="position: absolute;top: 20px;right: 10px;">
-                    <div class="fields " style="margin-bottom: 0;">
+                    <div class="fields " [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                         <p-dropdown 
                             *ngIf="listViews.length> 0 && status.length > 0" 
                             [options]="status" 

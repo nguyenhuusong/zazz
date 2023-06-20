@@ -3,7 +3,7 @@ position: absolute;
 top: 15px;
 right: 15px;
 ">
-    <div class="fields btn status">
+    <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''">
         <p-dropdown 
         *ngIf="listViews.length> 0 && status.length > 0" 
             [options]="status" 
