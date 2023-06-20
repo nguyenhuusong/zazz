@@ -5,14 +5,7 @@
     </section>
 </div>
 <section *ngIf="!displayCustomerProfile" class="pt-0">
-    <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 0px;top: auto;z-index: 9;">
-        <p-button 
-            styleClass="p-button-sm" 
-            (click)="detailPopup()" 
-            icon="pi pi-user-edit" 
-            label="Sửa giấy tờ" >
-        </p-button>
-    </div>
+   
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
             <app-edit-detail 
@@ -23,7 +16,15 @@
 
             <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
             </app-loading-detail>
-            <div class="col-12  flex justify-content-end align-items-center btn-position" >
+            <div class="flex justify-content-end align-items-center gap6 btns-tab" >
+                <!-- <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 0px;top: auto;z-index: 9;"> -->
+                    <p-button 
+                        styleClass="p-button-sm" 
+                        (click)="detailPopup()" 
+                        icon="pi pi-user-edit" 
+                        label="Sửa giấy tờ" >
+                    </p-button>
+                <!-- </div> -->
                 <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0" 

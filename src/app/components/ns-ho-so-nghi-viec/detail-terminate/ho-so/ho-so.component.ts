@@ -213,21 +213,21 @@ export class HoSoComponent implements OnInit {
               {
                 onClick: this.dowloadFile.bind(this),
                 label: 'Xem File',
-                icon: 'fa fa-edit editing',
+                icon: 'pi pi-eye',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
               {
                 onClick: this.dowloadFileDemo.bind(this),
                 label: 'Tải file mẫu',
-                icon: 'fa fa-edit editing',
+                icon: 'pi pi-download',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
               },
               {
                 onClick: this.dowloadFileUpload.bind(this),
                 label: 'Tải về hồ sơ đã ký',
-                icon: 'pi pi-upload',
+                icon: 'pi pi-download',
                 key: 'view-job-detail',
                 class: 'btn-primary mr5',
                 hide: !params.data.meta_upload_url

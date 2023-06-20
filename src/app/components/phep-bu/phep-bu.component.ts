@@ -218,7 +218,7 @@ export class PhepBuComponent implements OnInit, AfterViewChecked {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       }]
   }
 

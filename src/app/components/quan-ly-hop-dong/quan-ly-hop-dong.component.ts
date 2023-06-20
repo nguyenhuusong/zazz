@@ -230,7 +230,7 @@ export class QuanLyHopDongComponent implements OnInit {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       }]
   }
 

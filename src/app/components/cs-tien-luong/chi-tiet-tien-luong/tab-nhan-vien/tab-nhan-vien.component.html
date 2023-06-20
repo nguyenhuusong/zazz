@@ -1,5 +1,5 @@
-<div class="col-6  flex justify-content-end align-items-center"  style="position: absolute;top: 5px;right: 10px;">
-    <div class="fields " style="margin-bottom: 0;">
+<div class="flex justify-content-end align-items-center btns-tab" >
+    <div class="fields btn status mb-0" [ngClass]="status.length <= 1 ? 'no-dropdown' : '' ">
         <p-dropdown 
             *ngIf="columnDefs.length> 0 && status.length > 0" 
             [options]="status" 

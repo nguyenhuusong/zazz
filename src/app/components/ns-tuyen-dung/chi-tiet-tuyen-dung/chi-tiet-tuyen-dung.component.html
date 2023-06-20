@@ -3,41 +3,7 @@
         <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="quaylai('')"></i>
         <app-hrm-breadcrumb [items]="items"></app-hrm-breadcrumb>
     </section>
-    <section class="content" style="
-    position: absolute;
-    top: 5px;
-    right: 0px;
-">
-        <div class="gap12 d-flex end"  *ngIf="tabIndex === 0" >
-        <div class="fields btn status mb-0" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''">
-            <p-dropdown 
-                *ngIf="listViews.length> 0 && status.length > 0" 
-                [options]="status" 
-                (onChange)="recruiUpdateStatus()"
-                [(ngModel)]="selectedCountry" 
-                [styleClass]="selectedCountry?.bgColor"  
-                optionLabel="name"  
-                placeholder="Chọn trạng thái">
-                <ng-template pTemplate="selectedItem" >
-                    <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
-                        <div>{{ selectedCountry.name}}</div>
-                    </div>
-                </ng-template>
-                <ng-template let-country pTemplate="item">
-                    <div class="flex align-items-center gap-2" *ngIf="country.value != selectedCountry.value">
-                        <div class="pb-2 pt-2 gap-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
-                            <span style="white-space:nowrap">{{ country.placeholder }} </span>
-                            <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
-                            <span [class]="country.textColor" style="white-space:nowrap">{{ country.name }}</span>
-                        </div>
-                    </div>
-                </ng-template>
-            </p-dropdown>
-        </div>
-        <p-splitButton icon="{{ menuActions[0].icon }} uni-white-color" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-        <!-- <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
-    </div>
-    </section>
+    
     <section>
         <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
             <p-tabPanel header="Thông tin tuyển dụng">
@@ -60,6 +26,38 @@
                 </div>
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">
                 </app-loading-detail>
+                <!-- *ngIf="tabIndex === 0"  -->
+            <div class="btns-tab">
+                <div class="gap12 d-flex end" >
+                    <div class="fields btn status mb-0" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''">
+                        <p-dropdown 
+                            *ngIf="listViews.length> 0 && status.length > 0" 
+                            [options]="status" 
+                            (onChange)="recruiUpdateStatus()"
+                            [(ngModel)]="selectedCountry" 
+                            [styleClass]="selectedCountry?.bgColor"  
+                            optionLabel="name"  
+                            placeholder="Chọn trạng thái">
+                            <ng-template pTemplate="selectedItem" >
+                                <div class="flex align-items-center gap-2" *ngIf="selectedCountry" >
+                                    <div>{{ selectedCountry.name}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-country pTemplate="item">
+                                <div class="flex align-items-center gap-2" *ngIf="country.value != selectedCountry.value">
+                                    <div class="pb-2 pt-2 gap-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                        <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                        <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                        <span [class]="country.textColor" style="white-space:nowrap">{{ country.name }}</span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <p-splitButton icon="{{ menuActions[0].icon }} uni-white-color" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                    <!-- <p-button label="Quay lại" (click)="quaylai('')" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
+                </div>
+            </div>
             </p-tabPanel>
             <p-tabPanel header="Thông tin phỏng vấn" >
                 <app-tab-candidate-interview  *ngIf="tabIndex === 1" [canId]="modelEdit.canId" ></app-tab-candidate-interview>

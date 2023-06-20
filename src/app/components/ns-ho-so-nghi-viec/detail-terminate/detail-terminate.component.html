@@ -7,7 +7,7 @@
         </div>
     </section>
 </div>
-<section *ngIf="!isDialog">
+<section *ngIf="!isDialog" style="position: relative;">
     <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
         <p-tabPanel header="Thông tin chung">
             <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
@@ -18,8 +18,8 @@
                             *ngIf="listViews.length === 0">
                         </app-loading-detail>
 
-                        <div class="col-12  flex justify-content-end align-items-center" >
-                            <div class="fields " style="margin-bottom: 0;">
+                        <div class="flex justify-content-end align-items-center btns-tab" >
+                            <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                                 <p-dropdown 
                                     *ngIf="listViews.length> 0" 
                                     [options]="status" 

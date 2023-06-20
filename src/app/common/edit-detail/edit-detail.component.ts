@@ -59,12 +59,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() formTypeId: string = '';
   @Input() optionsButtonsEdit: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: 'uni-icon uni-save' }
+    { label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'uni-icon uni-save uni-white-color' }
   ];
 
   optionsButtonsEdit1: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: 'uni-icon uni-save' }
+    { label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'uni-icon uni-save uni-white-color' }
   ];
   @Input() modelMarkdow = {
     type: 1,

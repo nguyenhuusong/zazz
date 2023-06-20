@@ -241,7 +241,7 @@ this.listViewsFilter =  cloneDeep(event.listViewsFilter);
       {
         filter: '',
         width: 100,
-        pinned: '',
+        pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),

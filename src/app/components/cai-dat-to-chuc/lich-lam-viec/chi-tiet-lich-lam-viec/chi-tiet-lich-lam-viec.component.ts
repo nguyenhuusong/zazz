@@ -17,7 +17,7 @@ export class ChiTietLichLamViecComponent implements OnInit, OnChanges {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetWorktimePage.url, ACTIONS.EDIT) ? 'hidden' : ''},
+    { label: 'Lưu', value: 'Update', icon: 'uni-icon uni-save uni-white-color', class: CheckHideAction(MENUACTIONROLEAPI.GetWorktimePage.url, ACTIONS.EDIT) ? 'hidden' : ''},
     { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }];
   constructor(
     private apiService: ApiHrmService,
