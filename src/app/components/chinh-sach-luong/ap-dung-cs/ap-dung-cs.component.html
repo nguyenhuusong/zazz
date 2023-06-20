@@ -1,5 +1,8 @@
 <div class="wrap-edit-detail">
    <section class="pt-0">
+        <div class="p-2 text-right pt-0">
+            <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addUser()"></p-button>
+        </div>
         <app-list-grid-angular 
             [domLayout]="'autoHeight'" 
             *ngIf="columnDefs.length > 0" 

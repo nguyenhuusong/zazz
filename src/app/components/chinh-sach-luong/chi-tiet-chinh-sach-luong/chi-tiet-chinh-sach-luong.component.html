@@ -1,14 +1,15 @@
 <div class="main-grid product-detail" *ngIf="!isDialog">
     <section class="section-box">
         <div class="grid">
-            <div class="col-6">
+            <div class="col-6 flex gap-1">
+                <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="onBackPage()"></i>
                 <div class="breadcrumb">
                     <h3>{{titlePage}}</h3>
                     <p-breadcrumb [model]="itemsMenu"></p-breadcrumb>
                 </div>
             </div>
             <div class="col-6  flex justify-content-end align-items-center" >
-                <div class="fields " [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
+                <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0 && status.length > 0" 
                         [options]="status" 
@@ -35,7 +36,7 @@
                     </p-dropdown>
                 </div>
                 <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-                <p-button label="Quay lại" (click)="onBackPage()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                <!-- <p-button label="Quay lại" (click)="onBackPage()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
                   </div>
         </div>
        

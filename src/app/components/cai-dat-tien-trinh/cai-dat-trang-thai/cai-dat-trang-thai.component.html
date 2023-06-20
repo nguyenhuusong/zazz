@@ -1,4 +1,7 @@
 <section class="content pt-0">
+    <div class="text-right">
+        <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addNew()"></p-button>
+    </div>
     <div class="grid-default" #container>
         <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
             (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" (onCellClicked)="onCellClicked($event)"

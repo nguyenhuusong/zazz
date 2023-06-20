@@ -32,6 +32,7 @@
                 [listsData]="listsData" [height]="heightGrid"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 (onCellClicked)="onCellClicked($event)"
+                [detailCellRendererParams]="detailCellRendererParams"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
                 <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="14"></app-loading-grid>
             <div class="paginator">

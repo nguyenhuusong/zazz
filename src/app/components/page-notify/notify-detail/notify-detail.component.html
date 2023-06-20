@@ -1,7 +1,8 @@
 
 
 <div class="main-grid product-detail">
-  <section class="section-box">
+  <section class="section-box flex gap-1">
+    <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="onBackPage()"></i>
     <div class="breadcrumb">
       <h3>{{titlePage}}</h3>
         <p-breadcrumb [model]="items"></p-breadcrumb>
