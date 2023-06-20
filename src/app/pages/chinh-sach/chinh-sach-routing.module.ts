@@ -113,11 +113,11 @@ const routes: Routes = [
     },
   },
   {
-    path: 'cham-cong/tong-quan',
+    path: 'tong-quan-cham-cong',
     component: CsChamCongOverviewComponent,
     data: {
-      title: 'Tổng quan',
-      url: 'tong-quan',
+      title: 'Tổng quan chấm công',
+      url: 'tong-quan-cham-cong',
     },
   },
 
