@@ -1991,3 +1991,14 @@ p-sidebar{
 p-sidebar{
 
 }
+.avatar{
+    app-type-image{
+        .p-image{
+            display: block;
+            &>img{
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+}

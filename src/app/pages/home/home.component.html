@@ -56,7 +56,7 @@
                 <div class="chart-section">
                   <div class="d-flex bet ">
                       <div class="des">
-                        <h3 class="mb-3" style="color:#0a58ca;">Số lượng nhân sự </h3>
+                        <h3 class="mb-3">Số lượng nhân sự </h3>
                         <!-- <p>Công ty KSFinance</p> -->
                       </div>
                   </div>
@@ -72,7 +72,7 @@
                 <div class="chart-section">
                   <div class="d-flex bet middle">
                     <div class="desc">
-                      <h3 class="mb-3" style="color:#0a58ca;">Biến động nhân sự </h3>
+                      <h3 class="mb-3">Biến động nhân sự </h3>
                       <p>{{ selectedNode?.label }}</p>
                     </div>
                     <div id="legend-bien-dong-nhan-su" class="legend-default line">
@@ -86,7 +86,7 @@
               </div>
               <div class="col-6">
                 <div class="box">
-                  <h3 class="mb-3" style="color:#0a58ca;">Thống kê hợp đồng theo loại hợp đồng</h3>
+                  <h3 class="mb-3">Thống kê hợp đồng theo loại hợp đồng</h3>
                   <div class="chart d-flex middle">
                     <canvas  style="max-height: 258px; max-width: 258px; margin: auto" id="doughnut" *ngIf="dashboardData"></canvas>
                     <div id="legend-doughnut" class="legend-default dou">
@@ -113,7 +113,7 @@
               </div>
               <div class="col-6">
                 <div class="box h-100">
-                  <h3 class="mb-3" style="color:#0a58ca;">Nhân viên chưa ký hợp đồng</h3>
+                  <h3 class="mb-3">Nhân viên chưa ký hợp đồng</h3>
                   <app-list-grid-angular  
                     *ngIf="empSignContractColumnDef.length > 0"
                     [listsData]="dataEmpSignContract" 
@@ -130,7 +130,7 @@
       </div>
       <div class="col-3 md:col-12 lg:col-3 xl:col-3">
         <div class="box mb-3">
-          <h3 class="mb-3" style="color:#0a58ca;">Sinh nhật nhân viên</h3>
+          <h3 class="mb-3">Sinh nhật nhân viên</h3>
           <ul class="birth-day" *ngIf="empBirthDays && empBirthDays.length > 0">
             <li *ngFor="let birthDay of empBirthDays" class="mb-2">
               <div class="d-flex gap12">
@@ -146,7 +146,7 @@
           </ul>
         </div>
         <div class="box mb-3">
-          <h3 class="mb-3" style="color:#0a58ca;">Nhân viên hết hạn hợp đồng</h3>
+          <h3 class="mb-3">Nhân viên hết hạn hợp đồng</h3>
           <app-list-grid-angular  
             *ngIf="empContractExpColumnDef.length > 0"
             [listsData]="dataEmpContractExp" 
@@ -159,7 +159,7 @@
           </div>
         </div>
         <div class="box mb-3">
-          <h3 class="mb-3" style="color:#0a58ca;">Nhân viên hết hạn hộ chiếu/chứng minh thư</h3>
+          <h3 class="mb-3">Nhân viên hết hạn hộ chiếu/chứng minh thư</h3>
           <app-list-grid-angular  
             *ngIf="empIdCardExpColumnDef.length > 0"
             [listsData]="dataEmpIdCardExp" 
