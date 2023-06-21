@@ -163,7 +163,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     // this.spinner.show();
     const queryParams: any = { ...this.query };
     const queryStrings = queryString.stringify(queryParams);
-    this.apiService.getExplanationLeavePage(queryStrings)
+    this.apiService.getLeaveExplanPage(queryStrings)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
