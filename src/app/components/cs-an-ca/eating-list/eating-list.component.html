@@ -1,6 +1,7 @@
 <div class="main-grid">
-    <section class="bread-crumb">
-        <div class="d-flex bet bottom">
+    <section class="bread-crumb flex gap-1">
+         <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="goBack()"></i>
+        <div class="d-flex bet bottom flex-1">
             <app-hrm-breadcrumb [items]="items" ></app-hrm-breadcrumb>
             <p-button styleClass="p-button-sm " icon="pi pi-file-excel" label="Export" (click)="exportData()"
             [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetEatingPage.url, action: ACTIONS.EXPORT}"
@@ -18,7 +19,7 @@
                 <app-loading-grid 
                     [columnNumber]="9" 
                     gridtype="''" 
-                    *ngIf="columnDefs.length === 0">
+                    *ngIf="columnDefs?.length === 0">
                 </app-loading-grid>
 
             <div class="paginator">

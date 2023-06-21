@@ -19,6 +19,8 @@
                         </span>
                     </div>
                 </div>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addItem()"></p-button>
+                
                 <!-- <div class="d-flex align-items-center gap-16">
                     <p-button styleClass="reloadBtn hidden " (click)="cancel()">
                         <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +54,7 @@
                 [listsData]="listsData" [height]="heightGrid"
                 (showConfig)="cauhinh()"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'hsns'" *ngIf="columnDefs.length === 0" [columnNumber]="15"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'hsns'" *ngIf="columnDefs?.length === 0" [columnNumber]="15"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

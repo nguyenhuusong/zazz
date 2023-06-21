@@ -1024,6 +1024,7 @@ export class NsHoSoNhanSuComponent implements OnInit {
 
   filterLoad(event) {
     this.query = { ...this.query, ...event.data };
+    this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.load(true);
   }
   isShow = true;

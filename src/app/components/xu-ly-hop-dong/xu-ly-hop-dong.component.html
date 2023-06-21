@@ -26,7 +26,7 @@
                 <p-button (onClick)="Prints()"  *ngIf="this.listPrints.length > 0" label="PRINT" icon="pi pi-print" styleClass="p-button-sm "
                     [disabled]="isShowbtnPheDuyet">
                 </p-button>
-
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addNew()"></p-button>
                 <p-button class="" *ngIf="this.listPrints.length === 0" (click)="DowloadPlugin()"
                     styleClass="p-button-sm ">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,7 +44,7 @@
                 [rowSelection]="'multiple'" (callback)="rowSelected($event)" (showConfig)="cauhinh()" (onCellClicked)="onCellClicked($event)" [columnDefs]="columnDefs">
             </app-list-grid-angular>
 
-            <app-loading-grid *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+            <app-loading-grid *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
 
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
@@ -228,7 +228,7 @@ styleClass="menu-option-right" #menuButton></p-menu>
 <!-- filter -->
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
 

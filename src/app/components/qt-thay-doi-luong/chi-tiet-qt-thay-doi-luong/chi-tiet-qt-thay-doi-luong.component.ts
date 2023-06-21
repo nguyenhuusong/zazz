@@ -186,6 +186,10 @@ export class ChiTietQTThayDoiLuongComponent implements OnInit {
     })
   }
 
+  quaylai() {
+    this.router.navigate(['/nhan-su/qua-trinh-thay-doi-luong']);
+  }
+
   UpdateStatus() {
     this.getSalaryInfoDevM(this.selectedStatus.value);
   }

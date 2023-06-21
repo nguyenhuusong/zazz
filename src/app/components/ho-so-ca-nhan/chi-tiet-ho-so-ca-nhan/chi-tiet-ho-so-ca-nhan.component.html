@@ -1,17 +1,11 @@
 <div class="main-grid product-detail" *ngIf="!isDialog && !displayCustomerProfile">
-    <section class="bread-crumb">
+    <section class="bread-crumb flex gap-1">
+        <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="onBack()"></i>
         <app-hrm-breadcrumb  [items]="itemsMenu" ></app-hrm-breadcrumb>
     </section>
 </div>
 <section *ngIf="!displayCustomerProfile" class="pt-0">
-    <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 0px;top: auto;z-index: 9;">
-        <p-button 
-            styleClass="p-button-sm" 
-            (click)="detailPopup()" 
-            icon="pi pi-user-edit" 
-            label="Sửa giấy tờ" >
-        </p-button>
-    </div>
+   
     <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
             <app-edit-detail 
@@ -22,8 +16,16 @@
 
             <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
             </app-loading-detail>
-            <div class="col-12  flex justify-content-end align-items-center btn-position" >
-                <div class="fields " style="margin-bottom: 0;">
+            <div class="flex justify-content-end align-items-center gap6 btns-tab" >
+                <!-- <div *ngIf="tabIndex === 0" style="float: right;position: relative; right: 0px;top: auto;z-index: 9;"> -->
+                    <p-button 
+                        styleClass="p-button-sm" 
+                        (click)="detailPopup()" 
+                        icon="pi pi-user-edit" 
+                        label="Sửa giấy tờ" >
+                    </p-button>
+                <!-- </div> -->
+                <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
                     <p-dropdown 
                         *ngIf="listViews.length> 0" 
                         [options]="status" 
@@ -35,7 +37,7 @@
                         placeholder="Chọn trạng thái">
                         <ng-template pTemplate="selectedItem" >
                             <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                <div>{{ selectedStatus.name}}</div>
                             </div>
                         </ng-template>
                         <ng-template let-country pTemplate="item">
@@ -50,7 +52,7 @@
                     </p-dropdown>
                 </div>
                 <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
-                <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button>
+                <!-- <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
                   </div>
         </p-tabPanel>
         <p-tabPanel header="Danh sách giấy tờ" *ngIf="modelEdit.custId"> 
@@ -110,7 +112,7 @@
                         placeholder="Chọn trạng thái">
                         <ng-template pTemplate="selectedItem" >
                             <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                <div>{{ selectedStatus.name}}</div>
                             </div>
                         </ng-template>
                         <ng-template let-country pTemplate="item">

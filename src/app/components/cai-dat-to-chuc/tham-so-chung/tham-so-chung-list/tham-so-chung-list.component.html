@@ -27,6 +27,9 @@
         </div>
     </section>
     <section class="content">
+        <div class="text-right">
+            <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="handleAdd()"></p-button>
+        </div>
         <div class="grid-default" #container>
             <app-list-grid-angular  *ngIf="columnDefs && columnDefs.length > 0"
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"
@@ -52,6 +55,6 @@
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>

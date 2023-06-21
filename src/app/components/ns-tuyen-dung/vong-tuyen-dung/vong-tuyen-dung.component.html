@@ -18,6 +18,7 @@
                             </span>
                     </div>
                 </div>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="create()"></p-button>
                 <p-button (click)="backTo()" 
                     styleClass="p-button-sm  " icon="pi pi-arrow-left"> &nbsp;&nbsp;
                 </p-button>
@@ -44,7 +45,7 @@
                 (onCellClicked)="onCellClicked($event)"
                 >
             </app-list-grid-angular>
-            <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+            <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

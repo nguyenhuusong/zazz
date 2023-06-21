@@ -11,7 +11,7 @@
             *ngIf="listViews.length === 0">
         </app-loading-detail>
     </section>
-    <section>
+    <section style="position: relative;">
         <h3 class="pb-2">Danh sách kế hoạch</h3>
         <app-plan-detail *ngIf="modelEdit.recruitPlanId" [recruitPlantId]="modelEdit.recruitPlanId"></app-plan-detail>
     </section>
@@ -27,8 +27,8 @@
     </app-loading-detail>
 </section>
 <section>
-    <div class="section-box">
-        <h3>Danh sách kế hoạch</h3>
+    <div class="section-box border-section" style="position: relative;">
+        <h3 class="title-section">Danh sách kế hoạch</h3>
         <app-plan-detail *ngIf="recruitPlanId" [recruitPlantId]="recruitPlanId"></app-plan-detail>
     </div>
 </section>

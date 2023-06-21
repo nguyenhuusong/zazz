@@ -23,6 +23,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="themmoingaynghi()"></p-button>
          </div>
         </div>
     </section>
@@ -33,7 +34,7 @@
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" (onCellClicked)="onCellClicked($event)"
                 (callback)="rowSelected($event)">
             </app-list-grid-angular>
-            <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+            <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
@@ -53,7 +54,7 @@
 </p-dialog>
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="closeFilter($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="closeFilter($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
 <!-- <p-overlayPanel #op [style]="{'width': '40rem'}" [style]="{width: '700px'}" styleClass="advance-seach">
@@ -143,7 +144,7 @@
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
 

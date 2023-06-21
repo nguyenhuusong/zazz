@@ -307,7 +307,7 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   }
 
   goBack() {
-      this.router.navigate(['/chinh-sach/cham-cong']);
+      this.router.navigate(['/chinh-sach/an-ca']);
   }
 
   quaylai(event) {

@@ -193,6 +193,7 @@ export class LoaiToChucComponent implements OnInit {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
   }
@@ -236,10 +237,6 @@ export class LoaiToChucComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 60,
         pinned: 'right',
@@ -247,7 +244,7 @@ export class LoaiToChucComponent implements OnInit {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       }]
  
   }

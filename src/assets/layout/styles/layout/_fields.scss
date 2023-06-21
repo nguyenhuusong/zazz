@@ -276,6 +276,9 @@
 
     }
     .p-dropdown{
+        .p-dropdown-label{
+            font-weight: 500;
+        }
         &.bgTodo,
         &.bgDone{
             height: 34px;
@@ -284,6 +287,7 @@
             background-color: $success;
             .p-dropdown-label{
                 color: #fff;
+                font-weight: 500;
             }
             .p-dropdown-trigger{
                 color: #fff;
@@ -293,6 +297,7 @@
             background-color: $secondary;
             .p-dropdown-label{
                 color: #fff;
+                font-weight: 500;
             }
             .p-dropdown-trigger{
                 color: #fff;
@@ -651,6 +656,80 @@
         .p-dropdown{
             height: 34px;
         }
+        &.status{
+            .p-dropdown{
+                position: relative;
+                padding-left: 20px;
+                border-radius: 20px !important;
+                &::after{
+                    content: '';
+                    width: 14px;
+                    height: 14px;
+                    display: block;
+                    border-radius: 100%;
+                    position: absolute;
+                    left: 10px;
+                    top: 9px;
+                    z-index: 3;
+                }
+            }
+            .p-dropdown-trigger-icon{
+                font-size: 12px;
+                font-weight: 600;
+                color: #ccc;
+            }
+            .p-dropdown-item {
+                padding-top: 0;
+                padding-bottom: 0;
+            }
+            .p-dropdown-label{
+                padding-right: 0px;
+            }
+            .bgDone{
+                background-color: $success006;
+                border-color: $success006 !important;
+                .p-dropdown-label{
+                    color: $success;
+                }
+                &::after{
+                    background: $success
+                }
+            }
+            .bgTodo{
+                background-color: $secondary006;
+                border-color: $secondary006 !important;
+                .p-dropdown-label{
+                    color: $secondary;
+                }
+                &::after{
+                    background: $secondary
+                }
+            }
+            .bgInprogress{
+                background-color: $inProgress006;
+                border-color: $inProgress006 !important;
+                .p-dropdown-label{
+                    color: $inProgress;
+                }
+                &::after{
+                    background: $inProgress
+                }
+            }
+            .bgUndo{
+                background-color: $dark006;
+                border-color: $dark006 !important;
+                .p-dropdown-label{
+                    color: $dark;
+                }
+                &::after{
+                    background: $dark
+                }
+            }
+        }
+        .p-overlay{
+            left: auto !important;
+            right: 0px;
+        }
     }
     &.field-btn{
         input{
@@ -703,6 +782,14 @@
         }
         .p-dropdown{
             height: 36px;
+        }
+    }
+    &.no-dropdown{
+        .p-dropdown{
+            padding-right: 12px;
+            .p-dropdown-trigger{
+                display: none;
+            }
         }
     }
 }
@@ -853,6 +940,13 @@ p-image{
     .p-image-preview-indicator{
         .p-image-preview-icon{
             position: static;
+        }
+    }
+}
+p-splitbutton{
+    .p-splitbutton{
+        .p-splitbutton-menubutton{
+            width: auto;
         }
     }
 }

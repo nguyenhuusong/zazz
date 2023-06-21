@@ -312,17 +312,13 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         maxWidth: 120,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
+        field: ''
       }]
 
     this.detailCellRendererParams = {
@@ -478,6 +474,7 @@ export class LoaiBieuMauComponent implements OnInit, AfterViewChecked {
   }
 
    filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
   }

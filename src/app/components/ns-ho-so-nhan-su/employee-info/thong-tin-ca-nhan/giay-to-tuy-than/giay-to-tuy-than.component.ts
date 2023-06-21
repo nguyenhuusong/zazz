@@ -45,10 +45,14 @@ export class GiayToTuyThanComponent implements OnInit {
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển' });
+          
         });
       }
     }, 300);
+  }
+
+  addRow() {
+    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chức năng đang phát triển' });
   }
 
   ngOnInit(): void {
@@ -136,11 +140,7 @@ export class GiayToTuyThanComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(gridflexs || []),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
-        field: 'gridflexdetails1',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,

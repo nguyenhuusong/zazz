@@ -200,7 +200,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '',
         filter: '',
         width: 100,
         pinned: 'right',
@@ -362,6 +362,7 @@ detailInfoFilter = null;
   }
 
    filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
   }

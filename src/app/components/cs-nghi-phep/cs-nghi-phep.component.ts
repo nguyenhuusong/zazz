@@ -163,7 +163,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
     // this.spinner.show();
     const queryParams: any = { ...this.query };
     const queryStrings = queryString.stringify(queryParams);
-    this.apiService.getLeavePage(queryStrings)
+    this.apiService.getLeaveExplanPage(queryStrings)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (results: any) => {
@@ -266,29 +266,39 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   initGrid() {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
-      {
-        headerComponentParams: {
-          template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
-        filter: '',
-        width: 100,
-        pinned: 'right',
-        cellRenderer: 'buttonAgGridComponent',
-        cellClass: ['border-right', 'no-auto'],
-        cellRendererParams: (params: any) => this.showButtons(params),
-        checkboxSelection: false,
-        field: 'checkbox'
-      }]
+      // {
+      //   filter: '',
+      //   width: 100,
+      //   pinned: 'right',
+      //   cellRenderer: 'buttonAgGridComponent',
+      //   cellClass: ['border-right', 'no-auto'],
+      //   cellRendererParams: (params: any) => this.showButtons(params),
+      //   checkboxSelection: false,
+      //   field: ''
+      // }
+    ]
 
     this.detailCellRendererParams = {
       detailGridOptions: {
-        frameworkComponents: {},
+        frameworkComponents: {
+          buttonAgGridComponent: ButtonAgGridComponent,
+          customTooltip: CustomTooltipComponent,
+        },
         getRowHeight: (params) => {
           return 40;
         },
         columnDefs: [
           ...AgGridFn(this.colsDetail),
+          {
+            filter: '',
+            width: 100,
+            pinned: 'right',
+            cellRenderer: 'buttonAgGridComponent',
+            cellClass: ['border-right', 'no-auto'],
+            cellRendererParams: (params: any) => this.showButtons(params),
+            checkboxSelection: false,
+            field: ''
+          }
         ],
 
         enableCellTextSelection: true,
@@ -307,7 +317,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
         },
       },
       getDetailRowData(params) {
-        params.successCallback(params.data.Owns);
+        params.successCallback(params.data.details);
       },
       excelStyles: [
         {
@@ -315,17 +325,6 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
           dataType: 'string'
         }
       ],
-      template: function (params) {
-        var personName = params.data.theme;
-        return (
-          '<div style="height: 100%; background-color: #EDF6FF; padding: 20px; box-sizing: border-box;">' +
-          `  <div style="height: 10%; padding: 2px; font-weight: bold;">###### Danh sách (${params.data.Owns.length}) : [` +
-          personName + ']' +
-          '</div>' +
-          '  <div ref="eDetailGrid" style="height: 90%;"></div>' +
-          '</div>'
-        );
-      },
     };
   }
 
@@ -593,6 +592,7 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();

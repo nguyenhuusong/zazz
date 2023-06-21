@@ -181,7 +181,7 @@ export class ChiTietBienDongBHXHComponent implements OnInit {
     })
   }
 
-  backPgae() {
+  quaylai() {
     this.isDialog ? this.callback.emit() : this.router.navigate(['/nhan-su/bien-dong-bhxh'])
   }
 

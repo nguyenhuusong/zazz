@@ -1,4 +1,11 @@
 <div class="wrap-edit-detail">
+    <div class="text-right mb-2" style="
+    position: absolute;
+    top: 4px;
+    right: 15px;
+">
+        <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addSkill()"></p-button>
+    </div>
     <div class="border-section ">
         <div class="grid-default border">
             <app-list-grid-angular 
@@ -15,14 +22,12 @@
                 [columnNumber]="9" 
                 gridtype="''" 
                 [value]="[1,2]" 
-                *ngIf="columnDefs.length === 0">
+                *ngIf="columnDefs?.length === 0">
             </app-loading-grid>
 
         </div>
     </div>
 </div>
-
-
 
 <p-dialog header="Cài đặt cấu hình " [appendTo]="'body'" [focusTrap]="false" styleClass="popup-setting"
     (onHide)="getRecruitPlanDetailPage()" [(visible)]="displaySetting" [modal]="true" [style]="{width: '50vw'}"

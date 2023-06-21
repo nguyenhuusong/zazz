@@ -1,7 +1,10 @@
 <div class="grid wrap-edit-detail pt-2">
     <div class="col-12 border-section ">
         <div class="section-box">
-            <h3 class="title-section">Danh sách hợp đồng</h3>
+            <div class="d-flex bet col-12 pl-0 pr-0">
+                <h3 class="title-section">Danh sách hợp đồng</h3>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addContract()"></p-button>
+            </div>
             <app-list-grid-angular 
                         [domLayout]="'autoHeight'" 
                         *ngIf="columnDefs.length > 0" 
@@ -16,7 +19,7 @@
                         [columnNumber]="9" 
                         gridtype="''" 
                         [value]="[1,2]" 
-                        *ngIf="columnDefs.length === 0">
+                        *ngIf="columnDefs?.length === 0">
                     </app-loading-grid>
         </div>
     </div>

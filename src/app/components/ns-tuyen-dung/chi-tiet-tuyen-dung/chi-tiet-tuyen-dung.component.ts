@@ -46,7 +46,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   optionsButon = [
     { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: 'p-button-success', icon: 'pi pi-send' },
-    { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check' }
+    { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'uni-icon uni-save' }
   ]
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -255,10 +255,6 @@ export class CaiDatLichHopComponent implements OnInit {
       },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 70,
         pinned: 'right',
@@ -504,6 +500,7 @@ detailInfoFilter = null;
   }
 
    filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.model = { ...this.model, ...event.data };
     this.load();
     this.FnEvent();

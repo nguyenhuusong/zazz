@@ -23,6 +23,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addNew()"></p-button>
                 <p-button type="button" styleClass="box-icon" (click)="menuButton.toggle($event)" icon="uni-icon uni-dots" label=""></p-button>
                 <p-menu [model]="itemsToolOfGrid" [appendTo]="'body'" [popup]="true"
                 styleClass="menu-option-right" #menuButton></p-menu>
@@ -34,7 +35,7 @@
             <app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="heightGrid"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'" (onCellClicked)="onCellClicked($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
@@ -67,7 +68,7 @@
             [listFields]="listViewsFilter" 
             [detailInfoFilter]="detailInfoFilter" 
             [buttonsFilters] ="optionsButonFilter" 
-            (callback)="filterLoad($event)" 
+            (callback)="filterLoad($event);op.hide()" 
             (close)="close($event);op.hide()">
         </app-form-filter>
     </ng-template>

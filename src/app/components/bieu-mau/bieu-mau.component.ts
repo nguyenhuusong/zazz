@@ -412,17 +412,13 @@ export class BieuMauComponent implements OnInit, OnDestroy {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         maxWidth: 80,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right', 'no-auto', 'cell-options'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
+        field: ''
       },
     ]
   }
@@ -639,6 +635,7 @@ detailInfoFilter = null;
   }
 
    filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
   }

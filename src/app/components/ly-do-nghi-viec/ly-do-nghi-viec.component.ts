@@ -222,10 +222,6 @@ export class LyDoNghiViecComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 70,
         pinned: 'right',
@@ -233,7 +229,7 @@ export class LyDoNghiViecComponent implements OnInit {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       }]
   }
 
@@ -381,6 +377,7 @@ export class LyDoNghiViecComponent implements OnInit {
   }
 
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
     this.FnEvent();

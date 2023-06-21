@@ -207,10 +207,6 @@ export class ThietBiThangMayComponent implements OnInit {
         field: 'isActived',
       },
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="btn-thiet-bi-thang-may"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 100,
         pinned: 'right',

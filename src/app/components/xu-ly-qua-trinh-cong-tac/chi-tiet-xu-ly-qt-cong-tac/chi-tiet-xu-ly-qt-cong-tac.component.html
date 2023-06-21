@@ -17,7 +17,7 @@
                         placeholder="Chọn trạng thái">
                         <ng-template pTemplate="selectedItem" >
                             <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                <div>{{ selectedStatus.name}}</div>
                             </div>
                         </ng-template>
                         <ng-template let-country pTemplate="item">
@@ -71,6 +71,8 @@
         <app-edit-detail *ngIf="listViews.length> 0" [isNested]="true" [detail]="detailInfo" [manhinh]="'Edit'" [isHideButton]="true"
             [optionsButtonsEdit]="optionsButtonsView" [dataView]="listViews" (callback)="setDetail($event)"
             (callbackcancel)="cancel($event)"></app-edit-detail>
+            <app-hop-dong-process *ngIf="contract_is == 1 && detailInfo" [processId]="detailInfo?.processId" [empId]="detailInfo?.empId" ></app-hop-dong-process>
+
             <app-loading-detail 
                 [id]="'app-chi-tiet-xu-ly-qt-cong-tac'" 
                 *ngIf="listViews.length === 0">
@@ -94,7 +96,7 @@
                         placeholder="Chọn trạng thái">
                         <ng-template pTemplate="selectedItem" >
                             <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                                <div style="color: #fff">{{ selectedStatus.name}}</div>
+                                <div>{{ selectedStatus.name}}</div>
                             </div>
                         </ng-template>
                         <ng-template let-country pTemplate="item">

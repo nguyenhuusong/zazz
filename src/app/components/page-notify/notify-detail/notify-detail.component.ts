@@ -258,8 +258,11 @@ export class NotifyDetailComponent implements OnInit {
       this.getAppNotifyInfo();
     }else {
       this.router.navigate(['/cai-dat/thong-bao/danh-sach-thong-bao'])
-
     }
+  }
+
+  onBackPage() {
+    this.router.navigate(['/cai-dat/thong-bao/danh-sach-thong-bao'])
   }
 
   displayDsThongBao(data) {

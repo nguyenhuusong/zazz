@@ -59,12 +59,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() formTypeId: string = '';
   @Input() optionsButtonsEdit: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: '' }
+    { label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'uni-icon uni-save uni-white-color' }
   ];
 
   optionsButtonsEdit1: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: '' }
+    { label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'uni-icon uni-save uni-white-color' }
   ];
   @Input() modelMarkdow = {
     type: 1,
@@ -282,6 +282,7 @@ export class EditDetailComponent implements OnInit, OnChanges {
       this.callbackform(group_fields, event)
     }else if(event === 'Update' || event ==='newUpdate' || event ==='Submit') {
       for (let item in this.modelFields) {
+        console.log("sdsds", this.modelFields[item])
         if (this.modelFields[item].error) {
           this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Dữ liệu thiếu !' });
           return

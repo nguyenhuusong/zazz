@@ -21,6 +21,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button *ngIf="indexTab === 1" styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="handleAdd()"></p-button>
                 <p-button *ngIf="indexTab === 1" 
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetFormGeneral.url, action: ACTIONS.DAY_LEN_APP}"
                 [ngClass]="{ 'active' : listDataSelect.length > 0  }" styleClass="height-56 btn-active-on-off" (click)="pushToApp()">
@@ -56,7 +57,7 @@
                     (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                     >
                 </app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
                 <div class="paginator">
                     <span>Từ {{ countRecord.currentRecordStart }} đến
                         {{ countRecord.currentRecordEnd }}
@@ -147,7 +148,7 @@
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
 

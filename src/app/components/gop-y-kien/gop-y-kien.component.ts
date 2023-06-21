@@ -203,7 +203,7 @@ export class GopYKienComponent implements OnInit {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '',
         filter: '',
         width: 100,
         pinned: 'right',
@@ -293,6 +293,7 @@ export class GopYKienComponent implements OnInit {
   }
 
    filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load();
   }

@@ -23,6 +23,7 @@
                         </svg>
                         <span class="dot"></span>
                     </p-button>
+                    <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addChucVu()"></p-button>
                 </div>
         </div>
     </section>
@@ -32,7 +33,7 @@
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)"
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="7"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="7"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}
@@ -74,7 +75,7 @@
 
 <p-overlayPanel #op [style]="{'width': '40rem'}" [dismissable]="false" appendTo="body" >
     <ng-template pTemplate>
-        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event)" (close)="close($event);op.hide()"></app-form-filter>
+        <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
 

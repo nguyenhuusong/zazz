@@ -336,17 +336,13 @@ export class QtThayDoiLuongComponent implements OnInit {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         maxWidth: 100,
         pinned: 'right',
         cellRenderer: 'buttonAgGridComponent',
         cellClass: ['border-right cell-action', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
-        field: 'checkbox'
+        field: ''
       }]
 
     this.detailCellRendererParams = {
@@ -646,7 +642,7 @@ export class QtThayDoiLuongComponent implements OnInit {
   detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   getSalaryInfoFilter(reload: boolean) {
@@ -669,6 +665,7 @@ export class QtThayDoiLuongComponent implements OnInit {
       });
   }
   filterLoad(event) {
+this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.query = { ...this.query, ...event.data };
     this.load(true);
   }

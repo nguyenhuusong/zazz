@@ -17,7 +17,7 @@ export class ChiTietToChucComponent implements OnInit, OnChanges {
   indexTab = 0;
   optionsButtonsView = [
     { label: 'Lưu lại', value: 'Update', icon: 'pi pi-check', class: CheckHideAction(MENUACTIONROLEAPI.GetOrganizePage.url, ACTIONS.EDIT) ? 'hidden' : ''}, 
-    { label: 'Quay lại', value: 'Back', icon: 'pi pi-times', class: 'p-button-secondary'  }];
+   ];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
