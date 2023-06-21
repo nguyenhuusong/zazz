@@ -20,7 +20,7 @@ export class ChiTietCongTyComponent implements OnInit, OnChanges, OnDestroy {
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
+    { label: 'Lưu', value: 'Update', icon: 'pi pi-save', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
   ];
   constructor(
     private apiService: ApiHrmService,

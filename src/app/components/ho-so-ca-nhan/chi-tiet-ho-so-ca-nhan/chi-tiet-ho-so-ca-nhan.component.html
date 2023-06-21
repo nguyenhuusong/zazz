@@ -1,10 +1,44 @@
 <div class="main-grid product-detail" *ngIf="!isDialog && !displayCustomerProfile">
     <section class="bread-crumb flex gap-1">
-        <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="onBack()"></i>
-        <app-hrm-breadcrumb  [items]="itemsMenu" ></app-hrm-breadcrumb>
+        <div class="d-flex col-6">
+            <i class="pi pi-angle-left" style="font-size: 1.3rem; cursor: pointer;" (click)="onBack()"></i>
+            <app-hrm-breadcrumb  [items]="itemsMenu" ></app-hrm-breadcrumb>
+        </div>
+        <div class="col-6">
+            <div class="flex justify-content-end align-items-center gap6" >
+                <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
+                    <p-dropdown 
+                        *ngIf="listViews.length> 0" 
+                        [options]="status" 
+                        (onChange)="UpdateStatus()"
+                        [(ngModel)]="selectedStatus" 
+                        [styleClass]="selectedStatus?.bgColor"  
+                        [style]="{'width': '180px'}" 
+                        optionLabel="name"  
+                        placeholder="Chọn trạng thái">
+                        <ng-template pTemplate="selectedItem" >
+                            <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
+                                <div>{{ selectedStatus.name}}</div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-country pTemplate="item">
+                            <div class="flex align-items-center gap-2" *ngIf="country.value != selectedStatus?.value">
+                                <div class="pb-2 pt-2 gap-2" style="display: flex; align-items: center; width: 100%;justify-content: space-around;font-size: 13px;">
+                                    <span style="white-space:nowrap">{{ country.placeholder }} </span>
+                                    <span class="pi pi-arrow-right" style="font-size: 12px;"></span>
+                                    <span [class]="country.textColor" style="white-space:nowrap">{{ country.name }}</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm ml-2" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+                <!-- <p-button label="Quay lại" (click)="onBack()" styleClass="p-button-secondary p-button-sm ml-2" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
+            </div>
+        </div>
     </section>
 </div>
-<section *ngIf="!displayCustomerProfile" class="pt-0">
+<section *ngIf="!displayCustomerProfile" class="" [ngClass]="isDialog ? 'pt-0' : ''">
    
     <!-- <p-tabView (onChange)="handleChange($event.index)" [(activeIndex)]="tabIndex">
         <p-tabPanel header="Thông tin chung">
@@ -26,7 +60,7 @@
     </app-edit-detail>
     <app-loading-detail [id]="'markdown'" *ngIf="listViews.length === 0">
     </app-loading-detail>
-    <div class="flex justify-content-end align-items-center gap6 btns-tab" >
+    <div class="flex justify-content-end align-items-center gap6 btns-tab" *ngIf="isDialog">
         <div class="fields btn status" [ngClass]="status.length <= 1 ? 'no-dropdown' : ''" style="margin-bottom: 0;">
             <p-dropdown 
                 *ngIf="listViews.length> 0" 

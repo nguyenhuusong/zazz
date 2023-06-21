@@ -2066,7 +2066,8 @@ p-sidebar{
     top: 1px;
     right: 2px;
     left: auto;
-    width: auto !important
+    width: auto !important;
+    z-index: 2;
 }
 .btns-sidebar-top{
     position: absolute;

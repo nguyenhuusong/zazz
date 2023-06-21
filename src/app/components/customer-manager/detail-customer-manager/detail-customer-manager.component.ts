@@ -22,8 +22,8 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
   manhinh = 'View';
   indexTab = 0;
   optionsButtonsView = [
-    { label: 'Lưu', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
-    { label: 'Quay lại', value: 'Back', class: 'p-button-secondary' }
+    { label: 'Lưu', value: 'Update', icon: 'pi pi-save', class: CheckHideAction(MENUACTIONROLEAPI.GetCompanyPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
+    { label: 'Quay lại', value: 'Back', icon: 'pi pi-directions-alt', class: 'p-button-secondary' }
   ];
   optionsButtonsViewEmChange = [
     { label: 'Lưu', value: 'Update',  },
