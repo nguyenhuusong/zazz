@@ -2083,5 +2083,10 @@ p-tabview{
         .btn-group-edit-detail{
             top: 19px !important
         }
+        p-sidebar{
+            .btn-group-edit-detail{
+                top: auto !important
+            }
+        }
     }
 }

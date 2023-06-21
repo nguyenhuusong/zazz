@@ -16,7 +16,7 @@ export class ChiTietGopYComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
   indexTab = 0;
-  optionsButon = [{ label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },];
+  optionsButon = [{ label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },];
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,

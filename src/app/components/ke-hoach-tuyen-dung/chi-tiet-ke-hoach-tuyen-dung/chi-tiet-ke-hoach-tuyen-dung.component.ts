@@ -30,8 +30,8 @@ export class ChiTietKeHoachTuyenDungComponent implements OnInit {
     this.unsubscribe$.complete();
   }
   optionsButtonsView = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class:  '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class:  '', icon: 'pi pi-check'  },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   displayuploadcontract = false;
   metafile = null;

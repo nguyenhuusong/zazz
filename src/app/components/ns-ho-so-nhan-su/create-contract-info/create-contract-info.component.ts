@@ -29,7 +29,7 @@ export class CreateContractInfoComponent implements OnInit {
   ) { } 
 
   optionsButon = [
-    // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    // { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tạm tính', value: 'TamTinh', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.TAM_TINH) ? 'hidden' : '', icon: 'uni-icon icon-tam-tinh bg-none'  },
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetContractPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save'  },
   ]
