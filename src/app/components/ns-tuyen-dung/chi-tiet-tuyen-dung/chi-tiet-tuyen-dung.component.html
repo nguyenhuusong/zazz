@@ -102,10 +102,7 @@
     [(visible)]="displayAddCCCD" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Tải lên CCCD,  Hộ chiếu </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-cung-cap-cccd *ngIf="displayAddCCCD" [canId]="modelEdit.canId" (callback)="saveCCCD($event)"></app-cung-cap-cccd>
@@ -118,10 +115,7 @@
     styleClass="hideHeaderForm"
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Gửi mail </ng-template>
         <div class="fields" >
             <label>Nội dung gửi <span style="color: red">*</span></label>
