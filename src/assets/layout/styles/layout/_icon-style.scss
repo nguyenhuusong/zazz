@@ -338,14 +338,50 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &::after { background-image: export($colorIcon); }
         &:hover{ &::after{ background-image: export($IconHover); } }
     }
+    &.uni-contact-fill{
+        &::after { background-image: contactFill($colorIcon); }
+        &:hover{ &::after{ background-image: contactFill($IconHover); } }
+    }
+    &.uni-connect{
+        &::after { background-image: connect($colorIcon); }
+        &:hover{ &::after{ background-image: connect($IconHover); } }
+    }
+    &.uni-check-fill{
+        &::after { background-image: checkFill($colorIcon); }
+        &:hover{ &::after{ background-image: checkFill($IconHover); } }
+    }
+    &.uni-money-fill{
+        &::after { background-image: moneyFill($colorIcon); }
+        &:hover{ &::after{ background-image: moneyFill($IconHover); } }
+    }
+    &.uni-user-contact-fill{
+        &::after { background-image: userContactFill($colorIcon); }
+        &:hover{ &::after{ background-image: userContactFill($IconHover); } }
+    }
+    &.uni-user-setting-fill{
+        &::after { background-image: userSettingFill($colorIcon); }
+        &:hover{ &::after{ background-image: userSettingFill($IconHover); } }
+    }
+    &.uni-note-fill{
+        &::after { background-image: noteFill($colorIcon); }
+        &:hover{ &::after{ background-image: noteFill($IconHover); } }
+    }
+    &.uni-language-fill{
+        &::after { background-image: languageFill($colorIcon); }
+        &:hover{ &::after{ background-image: languageFill($IconHover); } }
+    }
     
     
+    
+
+
     &.uni-flag-vn{
         &::after { background-image: flagVN($colorIcon); }
     }
     &.uni-flag-en{
         &::after { background-image: flagEN($colorIcon); }
     }
+    
 }
 .p-highlight, a:hover{
     .uni-icon{
@@ -428,7 +464,14 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &.uni-work{  &::after { background-image: work($IconHover); }}
         &.uni-dots{  &::after { background-image: dots($IconHover); }}
         &.uni-export{  &::after { background-image: export($IconHover); }}
-        
+        &.uni-contact-fill{  &::after { background-image: contactFill($IconHover); }}
+        &.uni-connect{  &::after { background-image: connect($IconHover); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($IconHover); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($IconHover); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($IconHover); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($IconHover); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($IconHover); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($IconHover); }}
     }
 }
 .uni-icon{
@@ -512,6 +555,14 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &.uni-work{  &::after { background-image: work($orangerColor); }}
         &.uni-dots{  &::after { background-image: dots($orangerColor); }}
         &.uni-export{  &::after { background-image: export($orangerColor); }}
+        &.uni-contact-fill{  &::after { background-image: contactFill($orangerColor); }}
+        &.uni-connect{  &::after { background-image: connect($orangerColor); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($orangerColor); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($orangerColor); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($orangerColor); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($orangerColor); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($orangerColor); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($orangerColor); }}
         
     }
     &.uni-red-color{
@@ -594,7 +645,14 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &.uni-work{  &::after { background-image: work($redColor); }}
         &.uni-dots{  &::after { background-image: dots($redColor); }}
         &.uni-export{  &::after { background-image: export($redColor); }}
-        
+        &.uni-contact-fill{  &::after { background-image: contactFill($redColor); }}
+        &.uni-connect{  &::after { background-image: connect($redColor); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($redColor); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($redColor); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($redColor); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($redColor); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($redColor); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($redColor); }}
 
     }
     &.uni-green-color{
@@ -684,6 +742,14 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &.uni-work{  &::after { background-image: work($whiteColor); }}
         &.uni-dots{  &::after { background-image: dots($whiteColor); }}
         &.uni-export{  &::after { background-image: export($whiteColor); }}
+        &.uni-contact-fill{  &::after { background-image: contactFill($whiteColor); }}
+        &.uni-connect{  &::after { background-image: connect($whiteColor); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($whiteColor); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($whiteColor); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($whiteColor); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($whiteColor); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($whiteColor); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($whiteColor); }}
         
     }
 }
@@ -769,6 +835,14 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &.uni-work{  &::after { background-image: work($IconHover); }}
         &.uni-dots{  &::after { background-image: dots($IconHover); }}
         &.uni-export{  &::after { background-image: export($IconHover); }}
+        &.uni-contact-fill{  &::after { background-image: contactFill($IconHover); }}
+        &.uni-connect{  &::after { background-image: connect($IconHover); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($IconHover); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($IconHover); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($IconHover); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($IconHover); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($IconHover); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($IconHover); }}
     }
 }
 .uni-black-color{
@@ -852,6 +926,14 @@ $blackColor: rgba(0, 0, 0, 0.9);
         &.uni-work{  &::after { background-image: work($blackColor); }}
         &.uni-dots{  &::after { background-image: dots($blackColor); }}
         &.uni-export{  &::after { background-image: export($blackColor); }}
+        &.uni-contact-fill{  &::after { background-image: contactFill($blackColor); }}
+        &.uni-connect{  &::after { background-image: connect($blackColor); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($blackColor); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($blackColor); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($blackColor); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($blackColor); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($blackColor); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($blackColor); }}
         
     }
 }
@@ -937,6 +1019,14 @@ a:hover .uni-icon{
         &.uni-work{  &::after { background-image: work($orangerColor); }}
         &.uni-dots{  &::after { background-image: dots($orangerColor); }}
         &.uni-export{  &::after { background-image: export($orangerColor); }}
+        &.uni-contact-fill{  &::after { background-image: contactFill($orangerColor); }}
+        &.uni-connect{  &::after { background-image: connect($orangerColor); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($orangerColor); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($orangerColor); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($orangerColor); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($orangerColor); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($orangerColor); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($orangerColor); }}
     }
 }
 
@@ -1022,6 +1112,14 @@ a:hover .uni-icon{
         &.uni-work{  &::after { background-image: work($orangerColor); }}
         &.uni-dots{  &::after { background-image: dots($orangerColor); }}
         &.uni-export{  &::after { background-image: export($orangerColor); }}
+        &.uni-contact-fill{  &::after { background-image: contactFill($orangerColor); }}
+        &.uni-connect{  &::after { background-image: connect($orangerColor); }}
+        &.uni-check-fill{  &::after { background-image: checkFill($orangerColor); }}
+        &.uni-money-fill{  &::after { background-image: moneyFill($orangerColor); }}
+        &.uni-user-contact-fill{  &::after { background-image: userContactFill($orangerColor); }}
+        &.uni-user-setting-fill{  &::after { background-image: userSettingFill($orangerColor); }}
+        &.uni-note-fill{  &::after { background-image: noteFill($orangerColor); }}
+        &.uni-language-fill{  &::after { background-image: languageFill($orangerColor); }}
         
     }
 }
