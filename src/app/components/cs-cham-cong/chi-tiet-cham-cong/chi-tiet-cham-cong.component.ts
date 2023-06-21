@@ -15,8 +15,8 @@ import { AgGridFn } from 'src/app/common/function-common/common';
 export class ChiTietChamCongComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   manhinh = 'Edit';
-  indexTab = 0;
   optionsButtonsView = [];
+  indexTab: number = 0;
   constructor(
     private apiService: ApiHrmService,
     private activatedRoute: ActivatedRoute,
@@ -125,6 +125,11 @@ export class ChiTietChamCongComponent implements OnInit, OnDestroy {
 
   handleChange(index) {
     this.indexTab = index;
+    if(index === 0) {
+      this.getChamCongInfo();
+    }else {
+      
+    }
   }
 
   setCompanyInfo(data) {

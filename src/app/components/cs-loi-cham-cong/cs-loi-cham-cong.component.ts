@@ -146,11 +146,9 @@ export class CsLoiChamCongComponent implements OnInit, AfterViewChecked {
   }
 
   load(isSearch = false) {
-    
     if(this.apiParam && !isSearch) {
       this.query = { ...this.query, ...this.apiParam}
     }
-
     this.columnDefs = []
     // this.spinner.show();
     const params: any = { ...this.query };

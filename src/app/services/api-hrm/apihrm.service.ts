@@ -413,7 +413,6 @@ export class ApiHrmService {
   getTimeSheetPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetTimeSheetPage?` + queryParams, this.options)
   }
-
   getEmployeeSalaryMonthPage(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v1/timekeeping/GetEmployeeSalaryMonthPage?` + queryParams, this.options)
   }
@@ -2046,6 +2045,10 @@ export class ApiHrmService {
 
   getLeaveRequestMonthInfo(queryParams): Observable<any> {
     return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetLeaveRequestMonthInfo?` + queryParams, this.options)
+  }
+
+  getAnnualLeavePageByEmpId(queryParams): Observable<any> {
+    return this.http.get<any>(`${apiHrmServer}/api/v2/annualleave/GetAnnualLeavePageByEmpId?` + queryParams, this.options)
   }
 
   annualleaveImport(data): Observable<any> {

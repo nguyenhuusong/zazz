@@ -1,0 +1,18 @@
+<app-list-grid-angular *ngIf="columnDefs.length > 0" [listsData]="listsData" [height]="450"
+    (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
+    [columnDefs]="columnDefs"></app-list-grid-angular>
+<div class="paginator">
+    <span>Từ {{ countRecord.currentRecordStart }} đến
+        {{ countRecord.currentRecordEnd }}
+        trên tổng số
+        {{ countRecord.totalRecord }} kết quả</span>
+    <p-paginator [rows]="query.pageSize" [totalRecords]="countRecord.totalRecord" [first]="first"
+        (onPageChange)="paginate($event)" [rowsPerPageOptions]="[20,40,60,100,200,{ showAll: 'ALL' }]">
+    </p-paginator>
+</div>
+
+
+<p-dialog header="Cài đặt cấu hình" [(visible)]="displaySetting" (onHide)="getAnnualLeavePageByEmpId()" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="false" [focusTrap]="false" styleClass="popup-setting">
+    <app-config-grid-table-form *ngIf="displaySetting && gridKey" [typeConfig]="'TableInfo'"   [gridKey]="gridKey"></app-config-grid-table-form>
+</p-dialog>

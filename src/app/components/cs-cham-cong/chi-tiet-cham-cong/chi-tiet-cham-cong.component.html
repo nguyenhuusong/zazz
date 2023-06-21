@@ -11,15 +11,21 @@
         <app-edit-detail [optionsButtonsEdit]="optionsButtonsView"   *ngIf="listViews.length> 0" [detail]="detailInfo" [manhinh]="'Edit'"  [dataView]="listViews"
             (callback)="setCompanyInfo($event)" (callbackcancel)="cancelUpdate($event)"></app-edit-detail>
     </section>
-   
-    <section>
-     <div class="grid-default border">
-        <app-list-grid-angular 
-        [height]="480" *ngIf="columnDefs?.length > 0"
-                [listsData]="listsData"
-                [columnDefs]="columnDefs"></app-list-grid-angular>
-        </div>
-    </section>
+    <section class="content" style="margin-top: -20px;">
+        <p-tabView [(activeIndex)]="indexTab" (onChange)="handleChange($event.index)">
+            <p-tabPanel header="Chi tiết chấm công">
+                <div class="grid-default border">
+                    <app-list-grid-angular 
+                    [height]="450" *ngIf="columnDefs?.length > 0"
+                            [listsData]="listsData"
+                            [columnDefs]="columnDefs"></app-list-grid-angular>
+                    </div>
+            </p-tabPanel>
+            <p-tabPanel header="Danh sách phép năm">
+                <app-leave-annual-by-emp-id *ngIf="indexTab === 1" [empId]="dataRouter.empId"></app-leave-annual-by-emp-id>
+            </p-tabPanel>
+          </p-tabView>
+       </section>
 </div>
 
 <p-sidebar
