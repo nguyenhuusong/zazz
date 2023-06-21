@@ -21,8 +21,8 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   @Input() dataEmployeeStatus = null;
   @Output() reloadEdit = new EventEmitter<any>();
   optionsButtonsPopup = [
-    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+    { label: 'Xác nhận', value: 'Update', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
 
   first = 0;
@@ -365,8 +365,8 @@ export class ViTriCongViecComponent implements OnInit, AfterViewInit {
   listViewsFormMgInfo = [];
   detailMgInfo = null;
   btnMgInfoDetail = [
+    { label: 'Lưu lại', value: 'Update', icon: 'pi pi-check' },
     { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', icon: 'pi pi-check' }
   ]
 
   changeMg() {

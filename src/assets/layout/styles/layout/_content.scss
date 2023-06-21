@@ -1068,6 +1068,17 @@ p-splitbutton {
             border-bottom-left-radius: 0px;
         }
     }
+    &.no-dropdown{
+        .p-splitbutton{
+            .p-splitbutton-defaultbutton{
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+            .p-button-icon-only{
+                display: none;
+            }
+        }
+    }
 }
 
 p-sidebar{
@@ -1078,13 +1089,15 @@ p-sidebar{
         }
         .p-sidebar-header{
             color: #2B2F33;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 500;
             line-height: 20px;
             border-bottom: 1px solid #EDF1FA;
-            padding: 16px 30px;
+            padding: 8px 30px;
             font-family: $fontRegular;
             margin-bottom: 15px;
+            background: #f8f8f8;
+            box-shadow: 1px 1px 2px #cccccc96;
         }
         app-form-detail {
             &> form.Form {
@@ -2071,6 +2084,11 @@ p-tabview{
     .tab-ver{
         .btn-group-edit-detail{
             top: 19px !important
+        }
+        p-sidebar{
+            .btn-group-edit-detail{
+                top: auto !important
+            }
         }
     }
 }

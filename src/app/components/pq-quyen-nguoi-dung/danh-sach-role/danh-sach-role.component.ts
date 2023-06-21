@@ -17,7 +17,7 @@ export class DanhSachRoleComponent implements OnInit {
   @Input() detailInfo: any = null;
   @Output() callback = new EventEmitter<any>();
   optionsButon = [
-    // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    // { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-plus' }
   ]
   constructor(

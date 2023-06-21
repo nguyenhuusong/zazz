@@ -16,8 +16,8 @@ export class ListCccdComponent implements OnInit {
   @Input() custId = null;
   idcard_no: string = '';
   // optionsButtonsPopup = [
-  //   { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-  //   { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+  //   { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+  //   { label: 'Xác nhận', value: 'Update', class: 'btn-accept', icon: 'pi pi-check' }
   // ]
   @Output() cancelSave = new EventEmitter<any>();
   constructor(

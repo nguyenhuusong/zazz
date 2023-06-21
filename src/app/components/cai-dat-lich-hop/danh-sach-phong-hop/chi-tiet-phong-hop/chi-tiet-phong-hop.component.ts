@@ -21,8 +21,8 @@ export class ChiTietPhongHopComponent implements OnInit, OnDestroy {
   detailInfo = null
   listViews = [];
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetMeetRoomPage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-check'  },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   url: string = '';
   constructor(

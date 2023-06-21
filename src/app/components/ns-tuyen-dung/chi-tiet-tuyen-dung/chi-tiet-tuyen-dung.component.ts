@@ -44,9 +44,9 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
   listViews = [];
   displayAddCCCD = false;
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: 'p-button-success', icon: 'pi pi-send' },
-    { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'uni-icon uni-save' }
+    { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'uni-icon uni-save' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -143,7 +143,7 @@ export class ChiTietTuyenDungComponent implements OnInit, OnDestroy {
           this.detailInfo = results.data;
           this.custId = results.data.custId;
           // this.optionsButon = [
-          //   { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+          //   { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
           //   { label: 'Tạo hồ sơ cá nhân', value: 'CreateProfile', class: `p-button-success ${this.custId ? 'hidden' : ''}`, icon: 'pi pi-send' },
           //   { label: 'Lưu lại', value: 'newUpdate', class: 'newUpdate', icon: 'pi pi-check' }
           // ]

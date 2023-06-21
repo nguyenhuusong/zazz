@@ -65,10 +65,7 @@
     [(visible)]="displayPrint" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Danh sách in </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <div class="grid">
@@ -177,10 +174,7 @@
     [(visible)]="displayApproveContract" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{modelDuyetHopDong.type === 'duyet_ho_so' ? 'Duyệt hồ sơ' : 'Hủy duyệt hồ sơ'}} </ng-template>
         <!-- <div class="row col-md-12 mt-1 select-default" >
             <div class="fields">
@@ -239,3 +233,32 @@ styleClass="menu-option-right" #menuButton></p-menu>
     (callback)="emitContract($event)" 
     (back)="cancelPopupContract()">
     </app-contract-detail>
+
+<p-sidebar
+    [style]="{ width: '400px' }"
+    [(visible)]="isChangeContractStatus" 
+    position="right">
+    <ng-template pTemplate="header">
+        <!-- #iconheader -->
+        Phê duyệt hàng loạt hợp đồng</ng-template>
+    <div class="grid">
+        <div class="col-12">
+            <div class="fields">
+                <label>Họ tên</label>
+                <input [(ngModel)]="dataSetContractStatus.fullName" name="fullName">
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="fields">
+                <label>Comment</label>
+                <textarea [(ngModel)]="dataSetContractStatus.comment" ></textarea>
+                <!-- <input [(ngModel)]="dataSetContractStatus.contract_no" name="contract_no"> -->
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="setListContractStatus()" label="Xác nhận" styleClass=" p-button-sm mr-1">
+        </p-button>
+        <p-button icon="pi pi-times" (click)="isChangeContractStatus = false" label="Hủy" styleClass="p-button-secondary p-button-sm"></p-button>
+    </ng-template>
+</p-sidebar>

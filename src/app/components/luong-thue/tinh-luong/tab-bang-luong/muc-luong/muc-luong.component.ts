@@ -26,8 +26,8 @@ export class MucLuongComponent implements OnInit {
   ) { }
 
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' }
+    { label: 'Lưu lại', value: 'Update', class: '', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ];
   displaySetting =false;
   private readonly unsubscribe$: Subject<void> = new Subject();
