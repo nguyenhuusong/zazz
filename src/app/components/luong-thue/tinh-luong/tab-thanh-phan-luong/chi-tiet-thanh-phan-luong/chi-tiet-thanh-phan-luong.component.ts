@@ -19,8 +19,8 @@ export class ChiTietThanhPhanLuongComponent implements OnInit, OnDestroy {
   detailInfo = null
   listViews = [];
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' }
+    { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetPayrollAppInfoPage.url, ACTIONS.EDIT_TINH_LUONG_THANH_PHAN_LUONG) ? 'hidden' : '', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ];
   titlePage = '';
   @Input() idForm: string = null;

@@ -23,7 +23,7 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   ACTIONS = ACTIONS
 
   optionsButtonsView = [
-    // { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
+    // { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     { label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.EDIT) ? 'hidden' : '', icon: 'pi pi-save' },
     { label: 'Xuất hồ sơ', value: 'xuatHoSo', class: CheckHideAction(MENUACTIONROLEAPI.GetEmployeePage.url, ACTIONS.CT_HSNS_XUAT_HSNS) ? 'hidden' : '', icon: 'pi file-excel' },
     // { label: 'Duyệt hồ sơ', value: 'DuyetHoSo', class: '', icon: 'pi pi-check' },
@@ -36,8 +36,8 @@ export class ChiTietHoSoNhanSuComponent implements OnInit, OnChanges {
   // optionsButtonsView = [{ label: 'Sửa', value: 'Edit' }, { label: 'Quay lại', value: 'Back' }];
   optionsButtonsSave = [{ label: 'Lưu lại', value: 'Save' }, { label: 'Hủy', value: 'Back' }];
   optionsButtonsPopup = [
-    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+    { label: 'Xác nhận', value: 'Update', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   keyParamGetInfo = '';
   empId = null;

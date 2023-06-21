@@ -75,8 +75,8 @@ export class EatingListComponent implements OnInit, AfterViewChecked {
   gridKey = ''
   isDetail = false;
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update',  icon: 'pi pi-check'  }
+    { label: 'Lưu lại', value: 'Update',  icon: 'pi pi-check'  },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ];
 
   private readonly unsubscribe$: Subject<void> = new Subject();

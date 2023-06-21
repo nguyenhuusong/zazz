@@ -19,10 +19,8 @@ export class ChiTietLyDoNghiViecComponent implements OnInit, OnDestroy {
   manhinh = 'Edit';
   indexTab = 0;
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Lưu lại', value: 'Update',
-     icon: 'pi pi-check',  class: CheckHideAction(MENUACTIONROLEAPI.GetLeaveReasonPage.url, ACTIONS.EDIT) ? 'hidden' : ''
-  },
+    { label: 'Lưu lại', value: 'Update', icon: 'pi pi-check',  class: CheckHideAction(MENUACTIONROLEAPI.GetLeaveReasonPage.url, ACTIONS.EDIT) ? 'hidden' : '' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ];
   constructor(
     private apiService: ApiHrmService,

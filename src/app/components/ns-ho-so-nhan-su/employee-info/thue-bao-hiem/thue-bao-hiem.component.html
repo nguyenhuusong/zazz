@@ -42,7 +42,7 @@
                     </ng-template>
                 </p-dropdown>
             </div>
-            <p-splitButton icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
+            <p-splitButton [ngClass]="menuActions.length <= 1 ? 'no-dropdown' : ''" icon="pi pi-send" *ngIf="menuActions.length > 0" styleClass="p-button-sm" [appendTo]="'body'" (onClick)="callActions(menuActions[0].value)" [label]="menuActions[0].label" [model]="menuActions"></p-splitButton>
             <!-- <p-button label="Quay lại" styleClass="p-button-secondary p-button-sm" [style]="{'z-index': 9}" icon="pi pi-directions-alt"></p-button> -->
               </div>
     </div>
@@ -92,10 +92,7 @@
     [(visible)]="isEditDetail" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Sửa thông tin thuế bảo hiểm </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-chi-tiet-thue-bao-hiem *ngIf="isEditDetail" [empId]="empId" (cancelSave)="cancelSetDetail($event)"></app-chi-tiet-thue-bao-hiem>

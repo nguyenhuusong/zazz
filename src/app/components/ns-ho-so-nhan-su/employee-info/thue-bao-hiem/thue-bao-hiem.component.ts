@@ -158,8 +158,8 @@ export class ThueBaoHiemComponent implements OnInit {
 
 
   optionsButtonsPopup = [
-    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' }
+    { label: 'Xác nhận', value: 'Update', class: 'btn-accept', icon: 'pi pi-check' },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   gridKeyForm = {
     index: 0,

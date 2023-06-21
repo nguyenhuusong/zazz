@@ -27,11 +27,11 @@ export class CsNghiPhepComponent implements OnInit, AfterViewChecked {
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
   optionsButon = [
-    { label: 'Hủy', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
     {
       label: 'Lưu lại', value: 'Update', class: CheckHideAction(MENUACTIONROLEAPI.GetLeavePage.url, ACTIONS.EDIT) ? 'hidden' : ''
       , icon: 'pi pi-check'
-    }
+    },
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   private readonly unsubscribe$: Subject<void> = new Subject();
   dataNghiPhep: any;

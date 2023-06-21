@@ -15,8 +15,8 @@ import { fromEvent, Subject, takeUntil } from 'rxjs';
 export class PlanDetailComponent implements OnInit {
   @Input() recruitPlantId = null;
   optionsButtonsPopup = [
-    { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
-    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' , icon: "pi pi-send"}
+    { label: 'Xác nhận', value: 'Update', class: 'btn-accept' , icon: "pi pi-send"},
+    { label: 'Đóng', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times' },
   ]
   @Output() cancelSave = new EventEmitter<any>();
   constructor(

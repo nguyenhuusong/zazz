@@ -402,10 +402,7 @@
     [(visible)]="displayDialog" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{titleForm.title}} </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail
@@ -475,10 +472,7 @@
     [(visible)]="displayApproveContract" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Duyệt hợp đồng </ng-template>
         <div class="row col-md-12 mt-1" style="margin-top: 5px;">
             <div class="field-group textarea ">
@@ -503,10 +497,7 @@
     [(visible)]="hienthihopdong" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{modelContractInfo.contractId === null ? ' Tạo hợp đồng': 'Thông tin chi tiết hợp đồng'}} </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-contract-detail *ngIf="hienthihopdong" [modelContractInfo]="modelContractInfo"
@@ -520,10 +511,7 @@
     styleClass="popup-btngroup-edit-detail"
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{modelAttach.metaId > 0 ? 'Xem chi tiết file đính kèm' : 'Thêm file đính kèm'}} </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-emp-attach-file *ngIf="displayAttach" 
@@ -538,10 +526,7 @@
     [(visible)]="displayuploadcontract" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Tải lên hợp đồng [{{record?.meta_title}}] </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-upload-file [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file>
@@ -556,10 +541,7 @@ styleClass="xemthongtin-giayto-for-btn"
     (onHide)="onHideCreate()"
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Xem thông tin giấy tờ </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-detect-card *ngIf="isShowCustIndiCreate" [isShowRegister]="isShowRegister" (reset)="isShowRegister =!isShowRegister"  (callback)="confirmCheckCard($event)" [thongtinchitietthe]="thongtinchitietthe"></app-detect-card>
@@ -572,10 +554,7 @@ styleClass="xemthongtin-giayto-for-btn"
     [(visible)]="isShowAddress" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{thongtinlienhe.cont_id ? 'Xem chi tiết liên hệ' :  'Thêm mới người liên hệ'}} </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-add-address-contact *ngIf="isShowAddress" [thongtinlienhe]="thongtinlienhe" (back)="reloaddanhsachlienhe()"></app-add-address-contact>
@@ -590,10 +569,7 @@ styleClass="xemthongtin-giayto-for-btn"
     [ngClass]="hideTitlePopup ? 'hide-title-popup' : ''"
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{titleType0}} </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsDependent.length> 0 && detailDependentInfo" [detailInfo]="detailInfo"
@@ -608,10 +584,7 @@ styleClass="xemthongtin-giayto-for-btn"
     styleClass="xemthongtin-giayto-for-btn"
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         Chi tiết tài khoản </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-user-detail [keyName]="keyName" *ngIf="isShowEditUserLogin" [isDialog]="true" (back)="saveUserLoginEdit()"></app-user-detail>
@@ -622,10 +595,7 @@ styleClass="xemthongtin-giayto-for-btn"
     [(visible)]="displayNguoiDung" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{detailInfo?.account_no ? 'Chỉnh sửa' : 'Thêm'}} tài khoản người dùng [{{detailInfo?.fullName}}] </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-detail-account *ngIf="displayNguoiDung" [detailAccount]="detailAccount" [isModal]="false" (back)="displayNguoiDung = !displayNguoiDung"></app-detail-account>
@@ -636,10 +606,7 @@ styleClass="xemthongtin-giayto-for-btn"
     [(visible)]="isShowAddUserLogin" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{keyName === '' ? 'Thêm mới' : 'Chỉnh sửa'}}  tài khoản login </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     
@@ -661,10 +628,7 @@ styleClass="xemthongtin-giayto-for-btn"
     [(visible)]="hienThifileDinhKem" 
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         File đính kèm </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <div class="view-file text-center">
@@ -678,10 +642,7 @@ styleClass="xemthongtin-giayto-for-btn"
     styleClass="popup-btngroup-edit-detail"
     position="right">
     <ng-template pTemplate="header">
-        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.41 0L0 1.41L4.58 6L0 10.59L1.41 12L7.41 6L1.41 0Z" fill="#2B2F33"/>
-            <path d="M8 0L6.59 1.41L11.17 6L6.59 10.59L8 12L14 6L8 0Z" fill="#2B2F33"/>
-        </svg> &nbsp;&nbsp;
+        <!-- #iconheader -->
         {{titleEmpTrain}} </ng-template>
     <ng-template pTemplate="footer"></ng-template>
     <app-edit-detail [optionsButtonsEdit]="optionsButtonsPopup" *ngIf="listViewsEmpTrain.length> 0 && detailEmpTrainInfo" [detailInfo]="detailInfo"
