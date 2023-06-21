@@ -125,6 +125,14 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
 
   isPrinted: boolean = false;
   listsData = [];
+
+  dataSetContractStatus: any = {
+    contractIds: [],
+    fullName: '',
+    contract_no: '',
+    status: 1,
+    comment: '',
+  }
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -465,6 +473,14 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
           this.DowloadPlugin();
         }
       },
+      {
+        label: 'Phê duyệt hàng loạt hợp đồng',
+        code: 'plugin',
+        icon: 'pi pi-circle-fill',
+        command: () => {
+          this.changeListContractStatus();
+        }
+      },
     ];
 
     this.route.queryParams
@@ -479,6 +495,40 @@ export class XuLyHopDongComponent implements OnInit, OnDestroy {
         this.getContractFilter(true);
       }
     })
+  }
+
+  isChangeContractStatus = false;
+  changeListContractStatus() {
+    if(this.listRowSelects.length > 0) {
+      this.isChangeContractStatus = true;
+    }else{
+      this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Chưa có bản ghi nào được chọn!' });
+    }
+  }
+
+  setListContractStatus() {
+    if (this.listRowSelects.length > 0) {
+      this.dataSetContractStatus.contractIds = this.listRowSelects.map(d => {
+        return {
+          contractId: d.contractId,
+          fullName: d.fullName,
+          contract_no: d.contract_no,
+        }
+      })
+      this.apiService.setListContractStatus(this.dataSetContractStatus)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((res: any) => {
+          if (res.status === 'success') {
+            this.load();
+            this.isChangeContractStatus = false;
+            this.dataSetContractStatus.fullName = '';
+            this.dataSetContractStatus.comment = '';
+            this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.data ? res.data : '' });
+          } else {
+            this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: res.message });
+          }
+        });
+    }
   }
 
   getWebSocketService() {
