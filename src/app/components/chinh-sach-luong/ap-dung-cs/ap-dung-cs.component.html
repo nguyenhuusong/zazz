@@ -1,5 +1,8 @@
 <div class="wrap-edit-detail">
    <section class="pt-0">
+        <div class="btns-tab">
+            <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addUser()"></p-button>
+        </div>
         <app-list-grid-angular 
             [domLayout]="'autoHeight'" 
             *ngIf="columnDefs.length > 0" 
@@ -10,7 +13,7 @@
             (onCellClicked)="onCellClicked($event)"
             [columnDefs]="columnDefs">
         </app-list-grid-angular>
-        <app-loading-grid [columnNumber]="10" *ngIf="columnDefs.length === 0"  [gridtype]="'hsnv'" [value]="[1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7]"></app-loading-grid>
+        <app-loading-grid [columnNumber]="10" *ngIf="columnDefs?.length === 0"  [gridtype]="'hsnv'" [value]="[1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7]"></app-loading-grid>
    </section>
 </div>
 

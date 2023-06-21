@@ -389,10 +389,6 @@ detailInfoFilter = null;
     this.columnDefs = [
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 70,
         pinned: 'right',
@@ -400,7 +396,7 @@ detailInfoFilter = null;
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       },
     ]
   }
@@ -592,9 +588,6 @@ onCellClicked(event) {
             this.modelTM.imageLinks[index].url = result.data;
           }
         })
-
-
-
 
         // const getDAte = new Date();
         // const getTime = getDAte.getTime();

@@ -1,5 +1,9 @@
 <div class="main-grid">
     <section class="pt-0 pb-0">
+        <div class="text-right p-2 pt-0">
+            <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="create()"></p-button>
+        </div>
+        
         <app-list-grid-angular *ngIf="columnDefs.length > 0" 
             [height]="heightGrid"
             [columnDefs]="columnDefs"
@@ -11,7 +15,7 @@
             (onCellClicked)="onCellClicked($event)"
             >
         </app-list-grid-angular>
-        <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+        <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
         <div class="paginator">
             <span>Từ {{ countRecord.currentRecordStart }} đến
                 {{ countRecord.currentRecordEnd }}

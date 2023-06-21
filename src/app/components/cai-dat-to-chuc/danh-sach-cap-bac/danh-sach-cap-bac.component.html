@@ -29,6 +29,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addLichLamViec()"></p-button>
 
                 <!-- 
                     <p-button type="button" styleClass="box-icon" (click)="menuButton.toggle($event)" icon="uni-icon uni-dots" label=""></p-button> -->
@@ -49,7 +50,7 @@
                 (showConfig)="cauhinh()"
                 (onCellClicked)="onCellClicked($event)"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="10"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="10"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

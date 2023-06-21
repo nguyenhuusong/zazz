@@ -2,8 +2,9 @@
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex col-12 pl-0 pr-0 bet">
                     <h3 class="title-section">Danh sách công ty</h3>
+                    <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addCompany()"></p-button>
                 </div>
             </ng-template>
             <div class="row" style="flex-wrap: wrap">
@@ -22,7 +23,7 @@
                         [columnNumber]="9" 
                         gridtype="''" 
                         [value]="[1,2]" 
-                        *ngIf="columnDefs.length === 0">
+                        *ngIf="columnDefs?.length === 0">
                     </app-loading-grid>
 
                 </div>

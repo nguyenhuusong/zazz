@@ -59,12 +59,12 @@ export class EditDetailComponent implements OnInit, OnChanges {
   @Input() formTypeId: string = '';
   @Input() optionsButtonsEdit: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: '' }
+    { label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'uni-icon uni-save uni-white-color' }
   ];
 
   optionsButtonsEdit1: any = [
     { label: 'Bỏ qua', value: 'Cancel', class: 'p-button-secondary', icon: 'pi pi-times-circle' },
-    { label: 'Lưu lại', value: 'Update', class: '' }
+    { label: 'Lưu lại', value: 'Update', class: 'p-button-sm', icon: 'uni-icon uni-save uni-white-color' }
   ];
   @Input() modelMarkdow = {
     type: 1,
@@ -152,7 +152,6 @@ export class EditDetailComponent implements OnInit, OnChanges {
             error: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? true : false,
             message: element1.isVisiable && !element1.isDisable && !element1.isEmpty && element1.isRequire && (element1.columnValue === null || element1.columnValue === "") ? 'Trường bắt buộc nhập !' : ''
           }
-          console.log(dataValidation)
           this.modelFields[`${element1.field_name}${element1.group_cd}`] = dataValidation
         }
         if (element1.columnType === 'select' || element1.columnType === 'members' || element1.columnType === 'dropdown' || element1.columnType === 'selectTree' || element1.columnType === 'selectTrees'

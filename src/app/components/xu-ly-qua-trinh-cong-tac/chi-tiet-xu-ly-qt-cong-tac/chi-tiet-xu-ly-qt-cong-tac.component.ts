@@ -117,6 +117,7 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
   }
   status = [];
   selectedStatus= null;
+  contract_is: number | string = 0;
   getEmpProcessInfo(flow_cur = null) {
     this.detailInfo = null;
     this.listViews = [];
@@ -124,6 +125,7 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
     const queryParams = queryString.stringify({ processId: this.modelEdit.processId, flow_cur: flow_cur, empId: this.modelEdit.empId });
     this.apiService.getEmpProcessInfo(queryParams).subscribe(results => {
       if (results.status === 'success') {
+        this.contract_is = this.getValueByKey(results.data.group_fields, 'contract_is');
         this.activeIndex = results.data.flow_st;
         this.flowCurrent = results.data.flow_cur;
         this.modelEdit.processId = results.data.processId;
@@ -147,6 +149,22 @@ export class ChiTietXuLyQtCongTacComponent implements OnInit {
       }
     })
   }
+
+  getValueByKey(listViews, key) {
+    if (listViews && listViews.length > 0) {
+      let value = ''
+      for (let i = 0; i < listViews.length; i++) {
+        for (let j = 0; j < listViews[i].fields.length; j++) {
+          if (listViews[i].fields[j].field_name === key) {
+            value = listViews[i].fields[j].columnValue;
+            break;
+          }
+        }
+      }
+      return value
+    }
+  }
+
 
   onBack() {
     this.router.navigate(['/nhan-su/xu-ly-qua-trinh-cong-tac'])

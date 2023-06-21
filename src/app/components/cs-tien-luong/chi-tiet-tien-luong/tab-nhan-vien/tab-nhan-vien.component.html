@@ -1,5 +1,5 @@
-<div class="col-6  flex justify-content-end align-items-center"  style="position: absolute;top: 5px;right: 10px;">
-    <div class="fields " style="margin-bottom: 0;">
+<div class="flex justify-content-end align-items-center btns-tab" >
+    <div class="fields btn status mb-0" [ngClass]="status.length <= 1 ? 'no-dropdown' : '' ">
         <p-dropdown 
             *ngIf="columnDefs.length> 0 && status.length > 0" 
             [options]="status" 
@@ -11,7 +11,7 @@
             placeholder="Chọn trạng thái">
             <ng-template pTemplate="selectedItem" >
                 <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                    <div style="color: #fff">{{ selectedStatus.name}}</div>
+                    <div>{{ selectedStatus.name}}</div>
                 </div>
             </ng-template>
             <ng-template let-country pTemplate="item">
@@ -52,6 +52,6 @@
         [columnNumber]="9" 
         gridtype="''" 
         [value]="[1,2]" 
-        *ngIf="columnDefs.length === 0">
+        *ngIf="columnDefs?.length === 0">
     </app-loading-grid>
 </div>

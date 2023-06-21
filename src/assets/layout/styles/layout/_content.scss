@@ -414,6 +414,17 @@ ag-grid-angular{
                         }
                     }
                 }
+                &.ag-row-group-expanded{
+                    &.ag-row-focus {
+                        .ag-cell{
+                            border-top: transparent !important;
+                            border-bottom: transparent !important;
+                        }
+                    }
+                    .ag-header{
+                        background: #f3f3f3;
+                    }
+                }
             }
             .ag-cell{
                 border: 1px solid transparent;
@@ -793,6 +804,9 @@ p-tabview{
                             span{
                                 color: $activeColor;
                             }
+                            // .pi{
+                            //     color: $success;
+                            // }
                         }
                     }
                 }
@@ -865,15 +879,21 @@ p-tabview{
                         margin-bottom: 0px !important;
                         border-bottom: none !important;
                         padding-left: 5px !important;
+                        width: 100%;
                         span{
                             white-space: unset !important;
                             line-height: 1;
+                        }
+                        .pi{
+                            position: absolute;
+                            right: 5px;
                         }
                         .uni-icon{
                             &::after{
                                 background: none;
                             }
                         }
+
                     }
                     &:hover{
                         a{
@@ -962,16 +982,17 @@ app-edit-detail{
                 z-index: 3;
             }
             .title-section{
-                color: $mainBg;
+                color: #0b3a85;
                 margin-bottom: 16px;
                 position: relative;
                 padding-bottom: 5px;
                 font-weight: 700;
+                font-size: 15px;
                 &::after{
                     content: '';
                     width: 32px;
                     height: 4px;
-                    background: rgb(0 84 219 / 72%);
+                    background: rgba(11,58,133,.7215686275);
                     position: absolute;
                     bottom: 0;
                     left: 0;
@@ -1099,12 +1120,15 @@ p-sidebar{
             padding-left: 0px;
             padding-right: 0px;
         }
+        .p-tabview {
+            position: static !important;
+        }
         .btn-group-edit-detail{
             position: absolute;
             bottom: 16px !important;
             right: 20px !important;
             z-index: 2;
-            top: auto;
+            top: auto !important;
         }
         .p-card{
             box-shadow: none;
@@ -1121,6 +1145,9 @@ p-sidebar{
             }
            }
         }
+        // .ag-root-wrapper{
+        //     border-color: #e8e8e8 !important;
+        // }
         // z-index: 2122 !important;
     }
 }
@@ -1543,6 +1570,7 @@ section{
     h3{
         margin-bottom: 10px;
     }
+    
 }
 .p-dropdown-items{
     .p-dropdown-item{
@@ -1982,6 +2010,67 @@ p-sidebar{
             font-family: 'SFProTextMedium';
             font-weight: 500;
             color: #4C97E4
+        }
+    }
+}
+p-sidebar{
+
+}
+.avatar{
+    app-type-image{
+        .p-image{
+            display: block;
+            &>img{
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+}
+
+.border-section{
+   .title-section{
+        color: #0b3a85;
+        margin-bottom: 16px;
+        position: relative;
+        padding-bottom: 5px;
+        font-weight: 700;
+        font-size: 15px;
+        &::after{
+            content: '';
+            width: 32px;
+            height: 4px;
+            background: rgba(11,58,133,.7215686275);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    }
+}
+
+.btns-tab{
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    left: auto;
+    width: auto !important
+}
+.btns-sidebar-top{
+    position: absolute;
+    top: 10px;
+    right: 70px;
+}
+
+p-tabview{
+    .p-tabview{
+        position: relative;
+    }
+    .btn-group-edit-detail{
+        top: 1px !important
+    }
+    .tab-ver{
+        .btn-group-edit-detail{
+            top: 19px !important
         }
     }
 }

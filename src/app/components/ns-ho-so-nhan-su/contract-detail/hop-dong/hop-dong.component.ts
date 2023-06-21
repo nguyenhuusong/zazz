@@ -90,7 +90,6 @@ export class HopDongComponent implements OnInit {
       if(dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {
-          console.log("sdsdsd")
           this.addContract()
         });
       }
@@ -105,11 +104,7 @@ export class HopDongComponent implements OnInit {
     this[columnDefs] = [
       ...AgGridFn(gridflexs || []),
       columnDefs === 'columnDefs' ? {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}_hopdong"> <span class="pi pi-upload action-grid-add" ></span></button>`,
-        },
-        field: 'gridflexdetails1',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,
@@ -146,7 +141,7 @@ export class HopDongComponent implements OnInit {
         },
       } : {
         
-        field: 'gridflexdetails12',
+        field: '',
         cellClass: ['border-right', 'no-auto'],
         pinned: 'right',
         width: 70,

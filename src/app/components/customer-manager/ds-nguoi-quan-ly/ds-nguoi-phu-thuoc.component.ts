@@ -232,10 +232,6 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
           columnDefs: [
             ...AgGridFn(this.colsDetail),
             {
-              headerComponentParams: {
-                template:
-                  `<button  class="btn-button" id="${this.gridKey}-child"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-              },
               filter: '',
               width: 60,
               pinned: 'right',
@@ -243,7 +239,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
               cellClass: ['border-right', 'no-auto'],
               cellRendererParams: (params: any) => this.showButtons(params),
               checkboxSelection: false,
-              field: 'checkbox'
+              field: ''
             }
           ],
   
@@ -390,7 +386,7 @@ export class DsNguoiPhuThuocComponent implements OnInit, AfterViewChecked {
   detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   getEmpDependentFilter() {

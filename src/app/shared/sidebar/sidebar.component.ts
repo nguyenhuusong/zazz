@@ -213,9 +213,10 @@ export class SidebarComponent implements OnInit {
     parseObjectProperties(obj: any[], pathname) {
         for (let k of obj) {
             k.label = k.title;
+            k.styleClass = 'parent_no_active' + ' ' + k.classs
             if (k.path && k.classs !== 'navigation-header') {
-                k.routerLink = k.path
-                k.icon = ''
+                k.routerLink = k.path;
+                k.icon = '';
             }
             if (k.path && k.classs === 'nav-link') {
                 k.routerLink = k.path
@@ -225,6 +226,7 @@ export class SidebarComponent implements OnInit {
             }
             if (k.routerLink) {
                 // active menu con
+              
                 if(k.isExternalLink) {
                     if (k.routerLink && pathname.includes(k.routerLink)) {
                         k.styleClass = 'parent_active' + ' ' + k.classs
@@ -233,25 +235,17 @@ export class SidebarComponent implements OnInit {
                     }
                 }else {
                     if (k.routerLink && pathname.includes(k.routerLink)) {
-                        k.styleClass = k.classs + ' active' + ' ' + k.classs
+                        k.styleClass = k.classs + ' active' + ' ' + k.classs;
                         k.icon = ''
                     } else {
-                        k.styleClass = k.classs + ' no-active'; + ' ' + k.classs
+                        k.styleClass = k.classs + ' no-active' + ' ' + k.classs;
                         k.icon = ''
                     }
                 }
                
             } else {
-                //active cha
-                // let element1: any = {
-                //     columnValue: ''
-                // };
-                // this.findNodeInTree2(obj, pathname,element1);
-                if (k.path && pathname && pathname.split('/').indexOf(k.path) > -1 && k.classs === 'navigation-header') {
-                    k.styleClass = "parent_active" + ' ' + k.classs
-                } else {
-                    k.styleClass = "parent_no_active" + ' ' + k.classs
-                }
+                const items = k.submenus.filter(i => pathname.includes(i.path));
+                if(items.length > 0) k.styleClass = "parent_active" + ' ' + k.classs
             }
 
             if (k.hasOwnProperty('items') && Array.isArray(k.items) && k.items.length > 0) {

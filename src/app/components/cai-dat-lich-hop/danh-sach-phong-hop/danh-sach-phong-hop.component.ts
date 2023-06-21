@@ -288,10 +288,6 @@ export class DanhSachPhongHopComponent implements OnInit {
       },
       ...AgGridFn(this.gridflexs.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -430,7 +426,6 @@ this.listViewsFilter =  cloneDeep(event.listViewsFilter);
   FnEvent() {
     setTimeout(() => {
       var dragTarget = document.getElementById(this.gridKey);
-      console.log('dragTarget', dragTarget)
       if (dragTarget) {
         const click$ = fromEvent(dragTarget, 'click');
         click$.subscribe(event => {

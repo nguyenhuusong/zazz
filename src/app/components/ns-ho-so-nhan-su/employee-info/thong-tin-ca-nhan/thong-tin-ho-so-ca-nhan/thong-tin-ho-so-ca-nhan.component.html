@@ -2,8 +2,10 @@
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex col-12 pl-0 pr-0 bet">
                     <h3 class="title-section">Danh sách hồ sơ cá nhân</h3>
+                    <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="themMoiThongTinHSCN()"></p-button>
+                    
                 </div>
             </ng-template>
             <div class="row" style="flex-wrap: wrap">
@@ -17,7 +19,7 @@
                     (showConfig)="CauHinh()"
                     [columnDefs]="columnDefs">
                 </app-list-grid-angular>
-                <app-loading-grid [columnNumber]="9" gridtype="''" [value]="[1,2]" *ngIf="columnDefs.length === 0"></app-loading-grid>
+                <app-loading-grid [columnNumber]="9" gridtype="''" [value]="[1,2]" *ngIf="columnDefs?.length === 0"></app-loading-grid>
                 </div>
             </div>
         </p-panel>

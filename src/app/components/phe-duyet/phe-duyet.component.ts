@@ -27,7 +27,7 @@ export class PheDuyetComponent implements OnInit, AfterViewChecked {
   ACTIONS = ACTIONS
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
   constructor(
     private apiService: ApiHrmService,
@@ -231,7 +231,7 @@ this.listViewsFilter =  cloneDeep(event.listViewsFilter);
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerName: 'Thao tác',
+        headerName: '',
         filter: '',
         width: 100,
         pinned: 'right',

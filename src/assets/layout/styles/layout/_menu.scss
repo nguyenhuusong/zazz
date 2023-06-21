@@ -8,7 +8,7 @@
     border-bottom: 0 !important;
     position: sticky;
     top: 0;
-    z-index: 9;
+    z-index: 99;
     .p-menubar-root-list{
         & > .p-menuitem {
             &> .p-menuitem-link{
@@ -126,7 +126,7 @@
             overflow: visible !important;
             z-index: 9999 !important;
             width: auto;
-            max-height: 345px;
+            max-height: 535px;
             overflow: auto !important;
             padding-top: 0px;
             padding-bottom: 0px;

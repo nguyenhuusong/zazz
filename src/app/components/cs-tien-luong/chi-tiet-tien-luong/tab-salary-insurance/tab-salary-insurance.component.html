@@ -21,7 +21,7 @@
     <app-loading-grid 
         [columnNumber]="9" 
         [value]="[1,2]" 
-        *ngIf="columnDefs.length === 0">
+        *ngIf="columnDefs?.length === 0">
     </app-loading-grid>
 </div>
 
@@ -38,7 +38,7 @@
             placeholder="Chọn trạng thái">
             <ng-template pTemplate="selectedItem" >
                 <div class="flex align-items-center gap-2" *ngIf="selectedStatus" >
-                    <div style="color: #fff">{{ selectedStatus.name}}</div>
+                    <div>{{ selectedStatus.name}}</div>
                 </div>
             </ng-template>
             <ng-template let-country pTemplate="item">

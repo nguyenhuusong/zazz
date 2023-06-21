@@ -212,10 +212,6 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
     this.columnDefs = [
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-          `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 70,
         pinned: 'right',
@@ -223,7 +219,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       }]
 
     this.detailCellRendererParams = {
@@ -370,7 +366,7 @@ export class ProvinceComponent implements OnInit, AfterViewChecked {
   detailInfoFilter = null;
   optionsButonFilter = [
     { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger  addNew', icon: 'pi pi-times' },
   ];
 
   getEmpFilter() {

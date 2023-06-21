@@ -264,10 +264,6 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
       },
       ...AgGridFn(this.cols.filter((d: any) => !d.isHide)),
       {
-        headerComponentParams: {
-          template:
-            `<button  class="btn-button" id="${this.gridKey}"> <span class="pi pi-plus action-grid-add" ></span></button>`,
-        },
         filter: '',
         width: 100,
         pinned: 'right',
@@ -275,7 +271,7 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
         cellClass: ['border-right', 'no-auto'],
         cellRendererParams: (params: any) => this.showButtons(params),
         checkboxSelection: false,
-        field: 'checkbox'
+        field: ''
       }]
 
     this.detailCellRendererParams = {
@@ -795,8 +791,8 @@ export class NsTuyenDungComponent implements OnInit, AfterViewChecked {
   cloneListViewsFilter = [];
   detailInfoFilter = null;
   optionsButonFilter = [
-    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-plus' },
-    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-danger ml-2  addNew', icon: 'pi pi-times' },
+    { label: 'Tìm kiếm', value: 'Search', class: 'p-button-sm ml-2  addNew', icon: 'pi pi-search' },
+    { label: 'Làm mới', value: 'Reset', class: 'p-button-sm p-button-secondary ml-2 addNew', icon: 'pi pi-refresh' },
   ];
 
   getCandidateFilter() {

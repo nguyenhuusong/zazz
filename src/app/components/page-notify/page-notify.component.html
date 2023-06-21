@@ -22,6 +22,7 @@
                     </svg>
                     <span class="dot"></span>
                 </p-button>
+                <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="AddNotify()"></p-button>
                 <p-button  (click)="menuButton.toggle($event)" label="Cài đặt" icon="pi pi-cog" styleClass="p-button-sm "></p-button>
             </div>
         </div>
@@ -32,7 +33,7 @@
                 [listsData]="listsData" [height]="heightGrid" (onCellClicked)="onCellClicked($event)" 
                 (showConfig)="cauhinh()" [idGrid]="gridKey + '_45dfs'"
                 [columnDefs]="columnDefs"></app-list-grid-angular>
-                <app-loading-grid  [gridtype]="'hsnv'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+                <app-loading-grid  [gridtype]="'hsnv'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
                 <span>Từ {{ countRecord.currentRecordStart }} đến
                     {{ countRecord.currentRecordEnd }}

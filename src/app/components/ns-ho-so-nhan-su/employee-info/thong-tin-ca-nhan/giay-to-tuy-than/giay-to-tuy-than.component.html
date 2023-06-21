@@ -2,11 +2,11 @@
     <div class="col-12 border-section ">
         <p-panel>
             <ng-template pTemplate="header">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex bet col-12 pl-0 pr-0">
                     <h3 class="title-section">Giấy tờ tùy thân</h3>
+                    <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="addRow()"></p-button>
                 </div>
             </ng-template>
-            <div class="row" style="flex-wrap: wrap">
                 <div class="grid-default border">
                     <app-list-grid-angular 
                         [domLayout]="'autoHeight'"
@@ -19,9 +19,8 @@
                         (onCellClicked)="onCellClicked($event)"
                         [columnDefs]="columnDefs">
                     </app-list-grid-angular>
-                    <app-loading-grid [columnNumber]="9" gridtype="''" [value]="[1,2]" *ngIf="columnDefs.length === 0"></app-loading-grid>
+                    <app-loading-grid [columnNumber]="9" gridtype="''" [value]="[1,2]" *ngIf="columnDefs?.length === 0"></app-loading-grid>
                 </div>
-            </div>
         </p-panel>
     </div>
 </div>

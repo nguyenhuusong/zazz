@@ -42,7 +42,7 @@
                 >
             </app-list-grid-angular>
 
-            <app-loading-grid *ngIf="columnDefs.length === 0"></app-loading-grid>
+            <app-loading-grid *ngIf="columnDefs?.length === 0"></app-loading-grid>
 
             <div class="paginator" >
                 <span >Từ {{ countRecord.currentRecordStart }} đến

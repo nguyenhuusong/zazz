@@ -23,7 +23,7 @@
     <p-tabPanel header="Thành phần lương">
         <div class="grid">
             <div class="col-6"></div>
-            <div class="col-6 text-right" style="position: absolute;top: -6px;right: -6px;">
+            <div class="col-6 text-right btns-sidebar-top">
                 <p-button label="Thêm mới" icon="pi pi-plus" (click)="addPayroll()" styleClass="p-button-sm mr-1"></p-button>
                 <p-button label="Cấu hình" icon="pi pi-cog" (click)="cauhinh()" styleClass="p-button-sm"></p-button>
             </div>
@@ -39,7 +39,7 @@
                     [columnNumber]="9" 
                     gridtype="''" 
                     [value]="[1,2]" 
-                    *ngIf="columnDefs.length === 0">
+                    *ngIf="columnDefs?.length === 0">
                 </app-loading-grid>
         </div>
 

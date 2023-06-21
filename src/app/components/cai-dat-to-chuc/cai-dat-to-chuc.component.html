@@ -24,6 +24,7 @@
             </svg>
             <span class="dot"></span>
         </p-button>
+        <p-button styleClass="p-button-sm" icon="pi pi-plus" label="Thêm mới" (click)="Add()"></p-button>
         <div class="d-flex gap6" *ngIf="this.isHrDiagram">
 
           <p-button label="Thêm mới" styleClass="p-button-sm mr-1 " icon="pi pi-plus" (click)="addNew()"></p-button>
@@ -70,7 +71,7 @@
               [height]="heightGrid" 
               [getDataPath]="getDataPath"
               [columnDefs]="columnDefs"></app-list-grid-tree-angular>
-              <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs.length === 0" [columnNumber]="11"></app-loading-grid>
+              <app-loading-grid  [gridtype]="'lhd'" *ngIf="columnDefs?.length === 0" [columnNumber]="11"></app-loading-grid>
             <div class="paginator">
             <span>Từ {{ countRecord.currentRecordStart }} đến
                 {{ countRecord.currentRecordEnd }}

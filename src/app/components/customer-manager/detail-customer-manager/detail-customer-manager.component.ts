@@ -368,7 +368,7 @@ export class DetailCustomerManagerComponent implements OnInit, OnChanges, OnDest
     this.loadjs++
     if (this.loadjs === 5) {
       if (b && b.clientHeight) {
-        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 110;
+        const totalHeight = a.clientHeight + b.clientHeight + d.clientHeight + e.clientHeight + 130;
         this.heightGrid = window.innerHeight - totalHeight
         this.changeDetector.detectChanges();
       } else {
