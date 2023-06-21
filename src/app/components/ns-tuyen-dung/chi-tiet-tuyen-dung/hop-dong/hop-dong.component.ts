@@ -24,6 +24,8 @@ export class HopDongComponent implements OnInit {
   }
 
   @Input() canId = null;
+  @Input() isDialog = false;
+  
   @Output() callBack = new EventEmitter<any>();
   constructor(
     private apiService: ApiHrmService,

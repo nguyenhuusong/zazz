@@ -21,7 +21,7 @@
                 </app-edit-detail>
                 <div class="grid mt-0">
                     <div class="col-12 pb-0">
-                        <app-ho-so *ngIf="listViews.length > 0" [canId]="modelEdit.canId" (callBack)="callBackCandidateFile()"></app-ho-so>
+                        <app-ho-so [isDialog]="true" *ngIf="listViews.length > 0" [canId]="modelEdit.canId" (callBack)="callBackCandidateFile()"></app-ho-so>
                     </div>
                 </div>
                 <app-loading-detail [id]="'chi-tiet-tuyen-dung'" *ngIf="listViews.length === 0">

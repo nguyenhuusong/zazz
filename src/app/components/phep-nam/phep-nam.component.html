@@ -29,6 +29,8 @@
                 <p-button styleClass="p-button-sm " icon="pi pi-file-excel" label="Export" (click)="exportData()"
                 [CheckHideActions]="{url:  MENUACTIONROLEAPI.GetAnnualLeavePage.url, action: ACTIONS.EXPORT}"
                 ></p-button>
+
+                <p-button type="button" styleClass="box-icon" (click)="optionsButton.toggle($event)" icon="uni-icon uni-dots" label=""></p-button>
             </div>
         </div>
     </section>
@@ -95,3 +97,6 @@
         <app-form-filter *ngIf="listViewsFilter.length > 0" [listFields]="listViewsFilter" [detailInfoFilter]="detailInfoFilter" [buttonsFilters] ="optionsButonFilter" (callback)="filterLoad($event);op.hide()" (close)="close($event);op.hide()"></app-form-filter>
     </ng-template>
 </p-overlayPanel>
+
+<p-menu [model]="optionsButtonDB" [appendTo]="'body'" [popup]="true"
+styleClass="menu-option-right p-menu-group" #optionsButton></p-menu>

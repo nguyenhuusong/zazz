@@ -28,7 +28,7 @@ export class PhepNamComponent implements OnInit, AfterViewChecked {
   items = [];
   MENUACTIONROLEAPI = MENUACTIONROLEAPI;
   ACTIONS = ACTIONS
-
+  optionsButtonDB = [];
   constructor(
     private apiService: ApiHrmService,
     private route: ActivatedRoute,

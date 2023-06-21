@@ -27,7 +27,7 @@
             </ul>
         </ng-template> -->
 </p-fileUpload>
-<div class="col-md-12 text-right mt-1">
-    <p-button styleClass="p-button-sm" label="Xác nhận" (click)="onSubmitUpload()"></p-button>
-</div>
+    <div class="" [ngClass]="isDialog ? 'btn-group-edit-detail' : ''">
+        <p-button styleClass="p-button-sm" icon="pi pi-check" label="Xác nhận" (click)="onSubmitUpload()"></p-button>
+    </div>
 </div>

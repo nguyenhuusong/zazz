@@ -49,5 +49,5 @@
         <!-- #iconheader -->
         Tải lên hồ sơ đính kèm </ng-template>
     <ng-template pTemplate="footer"></ng-template>
-    <app-upload-file-form-data [multiple]="" (callback)="handleUpload($event)" *ngIf="displayuploadcontract"></app-upload-file-form-data>
+    <app-upload-file-form-data [multiple]="" (callback)="handleUpload($event)" [isDialog]="isDialog" *ngIf="displayuploadcontract"></app-upload-file-form-data>
 </p-sidebar>
